@@ -3,23 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 import 'package:appdemo/models/detail_screen.dart';
 
-class DeviceScreen extends StatefulWidget {
-  const DeviceScreen({super.key});
-  static String routeName = "device_screen";
+class myInventoryScreen extends StatefulWidget {
+  const myInventoryScreen({super.key});
+  static String routeName = "myInventory_screen";
   @override
-  State<DeviceScreen> createState() => _DeviceScreenState();
+  State<myInventoryScreen> createState() => _myInventoryScreenState();
 }
 
-class _DeviceScreenState extends State<DeviceScreen> {
+class _myInventoryScreenState extends State<myInventoryScreen> {
   TextEditingController _textEditingController = TextEditingController();
-  List<Model> allModel = modelList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Thiết Bị'),
+          title: Text('Kiểm Kê'),
           centerTitle: true,
         ),
         body: Container(
@@ -40,7 +39,6 @@ class _DeviceScreenState extends State<DeviceScreen> {
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
-                        onChanged: searchDevice,
                         style: TextStyle(
                             color: const Color.fromARGB(255, 137, 37, 37)),
                         maxLength: 500,
@@ -55,17 +53,11 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                   bottomLeft: Radius.circular(30)),
                               borderSide: BorderSide(width: 0.8),
                             ),
-                            //border: InputBorder.none,
-                            
-                            hintText: 'Tên thiết bị,mã thiết bị,...',
+                            hintText: 'Tên/mã thiết bị',
                             prefixIcon: Icon(
                               Icons.search,
                               size: 30,
                             ),
-                            //  focusedBorder: UnderlineInputBorder(
-                            //  borderSide: BorderSide(color: Colors.blue), // Viền khi focus
-                            //  )
-                            
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30),
@@ -100,131 +92,44 @@ class _DeviceScreenState extends State<DeviceScreen> {
                             'Tìm kiếm',
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
-                          onPressed: () {                           
-                          },
+                          onPressed: () {},
                         )),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 10),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Trạng thái',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
+              GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                      height: 40,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Color.fromARGB(255, 225, 222, 222)),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Quét mã QR',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            right: 5,
+                            child: Icon(
+                              Icons.keyboard_arrow_right,
+                              size: 27.0,
+                              color: Colors.black,
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20))),
-                                      builder: (context) => Container(
-                                            child: Container(
-                                              padding: EdgeInsets.all(20),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    'Lọc Trạng Thái',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                },
-                                child: Container(
-                                  height: 30,
-                                  margin: EdgeInsets.all(10),
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 232, 230, 230),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30),
-                                          bottomRight: Radius.circular(30))),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                        'Tất cả',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 17),
-                                      )),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down)
-                                    ],
-                                  ),
-                                ))
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 10),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Khoa phòng',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {},
-                                child: Container(
-                                  height: 30,
-                                  margin: EdgeInsets.all(10),
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 232, 230, 230),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30),
-                                          bottomRight: Radius.circular(30))),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                        'Tất cả',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 17),
-                                      )),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down)
-                                    ],
-                                  ),
-                                ))
-                          ],
-                        ),
-                      ))
-                ],
-              ),
+                          ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(
+                          top: 5, bottom: 5, right: 10, left: 10),
+                      alignment: Alignment.center)),
               Row(
                 children: [
                   Container(
@@ -240,9 +145,9 @@ class _DeviceScreenState extends State<DeviceScreen> {
                   child: ListView.builder(
                       //shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: allModel.length,
+                      itemCount: modelList.length,
                       itemBuilder: (context, index) {
-                        Model _model = allModel[index];
+                        Model _model = modelList[index];
                         return GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -259,7 +164,6 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                   color: Color.fromARGB(255, 241, 239, 239),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
-                                //mainAxisAlignment:MainAxisAlignment.spaceAround,
                                 children: [
                                   CircleAvatar(
                                     backgroundImage: AssetImage(
@@ -304,16 +208,5 @@ class _DeviceScreenState extends State<DeviceScreen> {
                             ));
                       }))
             ])));
-  }
-
-  void searchDevice(String query) {
-    final suggestions = modelList.where((element) {
-      final modelTitile = element.titile.toLowerCase();
-      final input = query.toLowerCase();
-      return modelTitile.contains(input);
-    }).toList();
-    setState(() {
-      allModel = suggestions;
-    });
   }
 }

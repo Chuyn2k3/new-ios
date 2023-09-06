@@ -1,24 +1,23 @@
+import 'package:appdemo/screens/login_screen.dart';
+import 'package:appdemo/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/models/model.dart';
-import 'package:appdemo/screens/device_screen.dart';
+import 'package:appdemo/screens/myhome_screen.dart';
 
-class ReportScreen extends StatefulWidget {
-  const ReportScreen(this.models);
-  final Model models;
-  static String routeName = 'report_screen';
+class InfoScreen extends StatefulWidget {
+  static String routeName = 'info_screen';
   @override
-  State<ReportScreen> createState() => _ReportScreenState();
+  State<InfoScreen> createState() => _InfoScreenState();
 }
 
-class _ReportScreenState extends State<ReportScreen> {
-  //final bool check = (this.widget.models.titile == 'Đang báo hỏng');
+class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
+          //automaticallyImplyLeading: false,
           elevation: 0,
-          title: Text('Thiết Bị'),
+          title: Text('Cá nhân'),
           centerTitle: true,
         ),
         body: Container(
@@ -34,7 +33,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 Container(
                   margin: EdgeInsets.all(10),
                   width: double.infinity,
-                  height: 480,
+                  height: 450,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 244, 242, 242),
                       borderRadius: BorderRadius.only(
@@ -56,29 +55,12 @@ class _ReportScreenState extends State<ReportScreen> {
                       height: 10,
                     ),
                     Text(
-                      this.widget.models.titile,
+                      'Pham Thanh Long',
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 27,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      height: 40,
-                      margin: EdgeInsets.all(20),
-                      child: Text(this.widget.models.description,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500)),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: (this.widget.models.description == ('Mới')) ||
-                                  (this.widget.models.description ==
-                                      ('Đang sử dụng'))
-                              ? Color.fromARGB(255, 25, 208, 34)
-                              : Colors.red),
-                    ),
                     Divider(
                       //Divider tạo dòng kẻ ngang
                       color: Colors.blue[700], // Màu của dòng kẻ
@@ -96,12 +78,12 @@ class _ReportScreenState extends State<ReportScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Model:',
+                                    'Số điện thoại:',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  Text('Serial:',
+                                  Text('Khoa/Phòng:',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500))
@@ -109,12 +91,12 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.model,
+                                  Text('0342702590',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.serial,
+                                  Text('Không có dữ liệu',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -139,12 +121,12 @@ class _ReportScreenState extends State<ReportScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Năm sản xuất:',
+                                    'Chức vụ:',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  Text('Năm sử dụng:',
+                                  Text('Giới tính:',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500))
@@ -152,12 +134,12 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.yearMan.toString(),
+                                  Text('Administrator',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.yearUse.toString(),
+                                  Text('Không có dữ liệu',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -182,12 +164,12 @@ class _ReportScreenState extends State<ReportScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Hãng sản xuất:',
+                                    'Email:',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  Text('Xuất xứ:',
+                                  Text('Địa chỉ:',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500))
@@ -195,12 +177,12 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.manufacturer,
+                                  Text('chuyenp32@gmail.com',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.origin,
+                                  Text('Bách khoa,Hà Nội',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -211,46 +193,97 @@ class _ReportScreenState extends State<ReportScreen> {
                   ]),
                 ),
                 Container(
-                  height: 80,
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 227, 226, 226),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: TextFormField(
-                    style: TextStyle(
-                        color: const Color.fromARGB(255, 137, 37, 37)),
-                    maxLines: 500,
-                    //controller: _textEditingController,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 227, 224, 224),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 17, horizontal: 15),
-                      hintText: 'Nhập lí do báo hỏng tại đây',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(width: 0.8),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromARGB(255, 234, 231, 231)),
+                    child: Column(children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, SettingScreen.routeName);
+                        },
+                        child: Container(
+                            height: 40,
+                            width: double.infinity,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Icon(Icons.settings),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      'Cài đặt',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                Positioned(
+                                  right: 3,
+                                  child: Icon(
+                                    Icons.keyboard_arrow_right,
+                                    size: 24.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.only(
+                                top: 5, bottom: 5, right: 10, left: 10),
+                            alignment: Alignment.center),
                       ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                    onTap: () {
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      height: 45,
-                      child: Text('Báo Hỏng',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue),
-                    ))
+                      Divider(
+                        //Divider tạo dòng kẻ ngang
+                        color: Colors.blue[700], // Màu của dòng kẻ
+                        thickness: 1.4, // Độ dày của dòng kẻ
+                        indent: 20, // Khoảng cách từ lề trái
+                        endIndent: 20, // Khoảng cách từ lề phải
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, LoginScreen.routeName);
+                          },
+                          child: Container(
+                              height: 40,
+                              width: double.infinity,
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Icon(Icons.logout),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        'Đăng xuất',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                  Positioned(
+                                    right: 3,
+                                    child: Icon(
+                                      Icons.keyboard_arrow_right,
+                                      size: 24.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(
+                                  top: 5, bottom: 5, right: 10, left: 10),
+                              alignment: Alignment.center)),
+                    ]))
               ])
             ])));
   }

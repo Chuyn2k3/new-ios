@@ -1,4 +1,5 @@
 import 'package:appdemo/models/report_screen.dart';
+import 'package:appdemo/models/inventory_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 
@@ -298,7 +299,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         (this.widget.models.description == 'Đang sửa chữa') ||
                         (this.widget.models.description == 'Ngưng sử dụng'))
                     ? GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      InventoryScreen(this.widget.models)));
+                        },
                         child: Container(
                           margin: EdgeInsets.all(10),
                           alignment: Alignment.center,
@@ -324,8 +331,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              ReportScreen(this.widget.models)));
+                                          builder: (context) => ReportScreen(
+                                              this.widget.models)));
                                 },
                                 child: Container(
                                     alignment: Alignment.center,
@@ -348,7 +355,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                             Expanded(
                                 child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      InventoryScreen(this.widget.models)));
+                              },
                               child: Container(
                                   alignment: Alignment.center,
                                   width: 120,

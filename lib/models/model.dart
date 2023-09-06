@@ -24,7 +24,7 @@ class Model {
 }
 List<Model> modelList = [
   Model(
-      titile: 'Máy hút dịch Yuwell',
+      titile: 'hút dịch Yuwell',
       description: 'Đã thanh lý',
       //imageUrl: imageUrl,
       yearUse: 2018,

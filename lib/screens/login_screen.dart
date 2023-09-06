@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appdemo/screens/home_screen.dart';
+import 'package:appdemo/screens/Myhome_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formfield.currentState!.validate()) {
                             emailController.clear();
                             passController.clear();
-                            Navigator.pushNamed(context, HomeScreen.routeName);
+                            Navigator.pushNamedAndRemoveUntil(context, MyhomeScreen.routeName,(route)=>false);
                           }
                         },
                         child: Container(

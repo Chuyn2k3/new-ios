@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
+import 'package:appdemo/screens/device_screen.dart';
 
-class DetailsScreen extends StatefulWidget {
-  const DetailsScreen(this.models);
+class InventoryScreen extends StatefulWidget {
+  const InventoryScreen(this.models);
   final Model models;
+  static String routeName = 'inventory_screen';
   @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
+  State<InventoryScreen> createState() => _InventoryScreenState();
 }
 
-class _DetailsScreenState extends State<DetailsScreen> {
+class _InventoryScreenState extends State<InventoryScreen> {
   //final bool check = (this.widget.models.titile == 'Đang báo hỏng');
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20))),
             child: ListView(children: [
-              Column(children: [               
+              Column(children: [
                 Container(
                   margin: EdgeInsets.all(10),
                   width: double.infinity,
@@ -36,10 +38,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 244, 242, 242),
                       borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20))),
                   child: Column(children: [
                     CircleAvatar(
                       child: CircleAvatar(
@@ -112,7 +114,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.serial,style: TextStyle(
+                                  Text(this.widget.models.serial,
+                                      style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -154,7 +157,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.yearUse.toString(),style: TextStyle(
+                                  Text(this.widget.models.yearUse.toString(),
+                                      style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -196,7 +200,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.origin,style: TextStyle(
+                                  Text(this.widget.models.origin,
+                                      style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -206,155 +211,46 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ]),
                 ),
                 Container(
-                  width: double.infinity,
-                  child: Text('Lịch sử báo hỏng thiết bị',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  margin:
-                      EdgeInsets.only(top: 0, bottom: 5, right: 10, left: 10),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Color.fromARGB(255, 208, 204, 204)),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Xem lịch sử báo hỏng thiết bị',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          Positioned(
-                            right: 3,
-                            child: Icon(
-                              Icons.keyboard_arrow_down,
-                              size: 24.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                  height: 80,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 227, 226, 226),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 137, 37, 37)),
+                    maxLines: 500,
+                    //controller: _textEditingController,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 227, 224, 224),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+                      hintText: 'Nhập ghi chú kiểm kê tại đây',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide(width: 0.8),
                       ),
-                      margin: EdgeInsets.only(
-                          top: 5, bottom: 5, right: 10, left: 10),
-                      alignment: Alignment.center),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Text(
-                    'Lịch sử kiểm kê thiết bị',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  margin:
-                      EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10),
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                    },
                     child: Container(
-                        height: 40,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color.fromARGB(255, 208, 204, 204)),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Xem lịch sử kiểm kê thiết bị',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            Positioned(
-                              right: 3,
-                              child: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 24.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(
-                            top: 5, bottom: 5, right: 10, left: 10),
-                        alignment: Alignment.center)),
-                ((this.widget.models.description == 'Đang báo hỏng') ||
-                        (this.widget.models.description == 'Đã thanh lý') ||
-                        (this.widget.models.description == 'Đang sửa chữa') ||
-                        (this.widget.models.description == 'Ngưng sử dụng'))
-                    ? GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          height: 45,
-                          child: Text('Kiểm kê',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blue),
-                        ))
-                    : Container(
-                        margin: EdgeInsets.all(30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    width: 120,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.blue),
-                                    child: Text(
-                                      'Báo Hỏng',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    )),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Expanded(
-                                child: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  width: 120,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colors.blue),
-                                  child: Text('Kiểm Kê',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white))),
-                            ))
-                          ],
-                        ),
-                      ),
+                      margin: EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: 45,
+                      child: Text('Kiểm kê',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blue),
+                    ))
               ])
             ])));
   }
