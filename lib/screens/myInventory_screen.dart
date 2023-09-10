@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 import 'package:appdemo/models/detail_screen.dart';
@@ -11,18 +10,18 @@ class myInventoryScreen extends StatefulWidget {
 }
 
 class _myInventoryScreenState extends State<myInventoryScreen> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Kiểm Kê'),
+          title: const Text('Kiểm Kê'),
           centerTitle: true,
         ),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -33,14 +32,14 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      margin: EdgeInsets.only(top: 20, left: 20),
-                      decoration: BoxDecoration(
+                      margin: const EdgeInsets.only(top: 20, left: 20),
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 137, 37, 37)),
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 137, 37, 37)),
                         maxLength: 500,
                         controller: _textEditingController,
                         decoration: const InputDecoration(
@@ -80,15 +79,15 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                     flex: 1,
                     child: Container(
                         height: 49,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
                               bottomRight: Radius.circular(30)),
                           color: Color.fromARGB(255, 194, 190, 190),
                         ),
-                        margin: EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                        margin: const EdgeInsets.only(top: 3, right: 20, bottom: 5),
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             'Tìm kiếm',
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
@@ -104,8 +103,11 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: Color.fromARGB(255, 225, 222, 222)),
-                      child: Stack(
+                          color: const Color.fromARGB(255, 225, 222, 222)),
+                      margin: const EdgeInsets.only(
+                          top: 5, bottom: 5, right: 10, left: 10),
+                      alignment: Alignment.center,
+                      child: const Stack(
                         alignment: Alignment.center,
                         children: [
                           Row(
@@ -126,15 +128,12 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      margin: EdgeInsets.only(
-                          top: 5, bottom: 5, right: 10, left: 10),
-                      alignment: Alignment.center)),
+                      ))),
               Row(
                 children: [
                   Container(
-                      margin: EdgeInsets.only(left: 30),
-                      child: Text(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Text(
                         'Bấm vào để xem chi tiết',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w200),
@@ -147,30 +146,30 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: modelList.length,
                       itemBuilder: (context, index) {
-                        Model _model = modelList[index];
+                        Model model = modelList[index];
                         return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          DetailsScreen(_model)));
+                                          DetailsScreen(model)));
                             },
                             child: Container(
-                              margin: EdgeInsets.all(20),
-                              padding: EdgeInsets.only(right: 30, left: 30),
+                              margin: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.only(right: 30, left: 30),
                               height: 80,
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 241, 239, 239),
+                                  color: const Color.fromARGB(255, 241, 239, 239),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundImage: AssetImage(
                                         'assets/images/logo-bo-y-te.jpg'),
                                     radius: 30,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 30,
                                   ),
                                   Column(
@@ -179,26 +178,26 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        _model.titile,
-                                        style: TextStyle(
+                                        model.titile,
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500),
                                       ),
                                       Text(
-                                        'Model: ' + _model.model,
-                                        style: TextStyle(
+                                        'Model: ${model.model}',
+                                        style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
                                       Text(
-                                        'Serial: ' + _model.serial,
-                                        style: TextStyle(
+                                        'Serial: ${model.serial}',
+                                        style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      Text('Trạng thái: ' + _model.description,
-                                          style: TextStyle(
+                                      Text('Trạng thái: ${model.description}',
+                                          style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400)),
                                     ],

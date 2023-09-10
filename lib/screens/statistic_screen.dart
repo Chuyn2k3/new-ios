@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 
@@ -16,11 +15,11 @@ class _StatisticScreenState extends State<StatisticScreen> {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Thống Kê'),
+          title: const Text('Thống Kê'),
           centerTitle: true,
         ),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -31,10 +30,10 @@ class _StatisticScreenState extends State<StatisticScreen> {
                   Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 5),
+                        margin: const EdgeInsets.only(top: 5, left: 5),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Chọn loại dữ liệu',
                               style: TextStyle(
                                   color: Colors.black,
@@ -45,14 +44,14 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                 onPressed: () {
                                    showModalBottomSheet(
                                     context: context,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.vertical(top: Radius.circular(20))
                                     ),
                                     builder: (context) => Container(
                                       child: Container(
                                         height: 120,                                     
-                                        padding: EdgeInsets.all(20),
-                                        child: Column(
+                                        padding: const EdgeInsets.all(20),
+                                        child: const Column(
                                           children: [
                                             Text('Khoa phòng',style: TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.bold),)
                                           ],
@@ -63,9 +62,9 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                 },
                                 child: Container(
                                   height: 30,
-                                  margin: EdgeInsets.all(10),
+                                  margin: const EdgeInsets.all(10),
                                   width: 420,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color.fromARGB(255, 232, 230, 230),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30),
@@ -73,7 +72,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                           bottomLeft: Radius.circular(30),
                                           bottomRight: Radius.circular(30))),
                                   alignment: Alignment.center,
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Center(
@@ -97,10 +96,10 @@ class _StatisticScreenState extends State<StatisticScreen> {
                   Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 10),
+                        margin: const EdgeInsets.only(top: 5, left: 10),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Trạng thái',
                               style: TextStyle(
                                   color: Colors.black,
@@ -111,9 +110,9 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                 onPressed: () {},
                                 child: Container(
                                   height: 30,
-                                  margin: EdgeInsets.all(10),
+                                  margin: const EdgeInsets.all(10),
                                   width: 420,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color.fromARGB(255, 232, 230, 230),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30),
@@ -121,7 +120,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                           bottomLeft: Radius.circular(30),
                                           bottomRight: Radius.circular(30))),
                                   alignment: Alignment.center,
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Center(

@@ -33,7 +33,7 @@ class _QRScreenState extends State<QRScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Scanner'),
+        title: const Text('QR Code Scanner'),
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -51,7 +51,7 @@ class _QRScreenState extends State<QRScreen> {
               child: Center(
                 child: Text(
                   'Scan Result:$result',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               )),
           Expanded(           
@@ -61,23 +61,23 @@ class _QRScreenState extends State<QRScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    if (result!.isNotEmpty) {
+                    if (result.isNotEmpty) {
                       Clipboard.setData(ClipboardData(text: result));
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Copied to Clipboard')));
+                          const SnackBar(content: Text('Copied to Clipboard')));
                     }
                   },
-                  child: Text('Copy'),
+                  child: const Text('Copy'),
                 ),
-                SizedBox(width: 20,),
+                const SizedBox(width: 20,),
                 ElevatedButton(
                   onPressed: () async {
-                    if (result!.isNotEmpty) {
-                      final Uri _url = Uri.parse(result);
-                      await launchUrl(_url);
+                    if (result.isNotEmpty) {
+                      final Uri url = Uri.parse(result);
+                      await launchUrl(url);
                     }
                   },
-                  child: Text('Open'),
+                  child: const Text('Open'),
                 ),
               ],
             ),

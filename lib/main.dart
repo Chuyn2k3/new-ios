@@ -4,7 +4,7 @@ import 'package:appdemo/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:appdemo/screens/splash_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -14,11 +14,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.white,
-          backgroundColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white
+          scaffoldBackgroundColor: Colors.white, 
         ),
          routes: routes,
-        home:Scaffold(
+        home:const Scaffold(
           body:SplashScreen()
         ),
         );

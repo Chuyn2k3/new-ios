@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class Model {
   late String titile;
@@ -10,7 +9,6 @@ class Model {
   late String serial;
   late String manufacturer;
   late String origin;
-
   Model({
     required this.titile,
     required this.description,
@@ -20,8 +18,10 @@ class Model {
     required this.serial,
     required this.manufacturer,
     required this.origin,
+    
   });
 }
+
 List<Model> modelList = [
   Model(
       titile: 'hút dịch Yuwell',
@@ -32,7 +32,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00434',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Đang báo hỏng',
@@ -42,7 +43,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00433',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Đang sử dụng',
@@ -52,7 +54,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00431',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Đã thanh lý',
@@ -62,7 +65,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00439',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Đã thanh lý',
@@ -72,7 +76,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00432',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Đang sửa chữa',
@@ -82,7 +87,8 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00455',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
+      origin: 'Trung Quốc',
+      ),
   Model(
       titile: 'Máy hút dịch Yuwell',
       description: 'Ngưng sử dụng',
@@ -92,6 +98,6 @@ List<Model> modelList = [
       model: '7E-A',
       serial: '00450',
       manufacturer: 'Jiangsu yuyue',
-      origin: 'Trung Quốc'),
-  
+      origin: 'Trung Quốc',
+      ),
 ];

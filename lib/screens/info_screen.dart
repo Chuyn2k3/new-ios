@@ -1,10 +1,11 @@
 import 'package:appdemo/screens/login_screen.dart';
 import 'package:appdemo/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/screens/myhome_screen.dart';
 
 class InfoScreen extends StatefulWidget {
   static String routeName = 'info_screen';
+
+  const InfoScreen({super.key});
   @override
   State<InfoScreen> createState() => _InfoScreenState();
 }
@@ -17,13 +18,13 @@ class _InfoScreenState extends State<InfoScreen> {
         appBar: AppBar(
           //automaticallyImplyLeading: false,
           elevation: 0,
-          title: Text('Cá nhân'),
+          title: const Text('Cá nhân'),
           centerTitle: true,
         ),
         body: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
@@ -31,10 +32,10 @@ class _InfoScreenState extends State<InfoScreen> {
             child: ListView(children: [
               Column(children: [
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: double.infinity,
                   height: 450,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 244, 242, 242),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(20),
@@ -43,18 +44,18 @@ class _InfoScreenState extends State<InfoScreen> {
                           bottomRight: Radius.circular(20))),
                   child: Column(children: [
                     CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 230, 228, 228),
+                      radius: 60,
                       child: CircleAvatar(
+                        radius: 40,
                         child: Image.asset(
                             'assets/images/rounded-in-photoretrica.png'),
-                        radius: 40,
                       ),
-                      backgroundColor: Color.fromARGB(255, 230, 228, 228),
-                      radius: 60,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       'Pham Thanh Long',
                       style: TextStyle(
                           fontSize: 27,
@@ -69,9 +70,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -112,9 +113,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -155,9 +156,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -193,10 +194,10 @@ class _InfoScreenState extends State<InfoScreen> {
                   ]),
                 ),
                 Container(
-                    margin: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromARGB(255, 234, 231, 231)),
+                        color: const Color.fromARGB(255, 234, 231, 231)),
                     child: Column(children: [
                       GestureDetector(
                         onTap: () {
@@ -205,7 +206,10 @@ class _InfoScreenState extends State<InfoScreen> {
                         child: Container(
                             height: 40,
                             width: double.infinity,
-                            child: Stack(
+                            margin: const EdgeInsets.only(
+                                top: 5, bottom: 5, right: 10, left: 10),
+                            alignment: Alignment.center,
+                            child: const Stack(
                               alignment: Alignment.center,
                               children: [
                                 Row(
@@ -233,10 +237,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                   ),
                                 ),
                               ],
-                            ),
-                            margin: EdgeInsets.only(
-                                top: 5, bottom: 5, right: 10, left: 10),
-                            alignment: Alignment.center),
+                            )),
                       ),
                       Divider(
                         //Divider tạo dòng kẻ ngang
@@ -252,7 +253,10 @@ class _InfoScreenState extends State<InfoScreen> {
                           child: Container(
                               height: 40,
                               width: double.infinity,
-                              child: Stack(
+                              margin: const EdgeInsets.only(
+                                  top: 5, bottom: 5, right: 10, left: 10),
+                              alignment: Alignment.center,
+                              child: const Stack(
                                 children: [
                                   Row(
                                     children: [
@@ -279,10 +283,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                     ),
                                   ),
                                 ],
-                              ),
-                              margin: EdgeInsets.only(
-                                  top: 5, bottom: 5, right: 10, left: 10),
-                              alignment: Alignment.center)),
+                              ))),
                     ]))
               ])
             ])));

@@ -14,7 +14,7 @@ class _NotificationScreen extends State<NotificationScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Thông Báo',
           ),
         ),
@@ -24,7 +24,7 @@ class _NotificationScreen extends State<NotificationScreen> {
         width: double.infinity,
         height: double.infinity,
         //margin: EdgeInsets.only(top: 100),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             color: Colors.white),

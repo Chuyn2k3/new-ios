@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'package:appdemo/services/api.dart';
+import 'package:appdemo/services/data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 import 'package:appdemo/models/detail_screen.dart';
@@ -11,19 +12,58 @@ class DeviceScreen extends StatefulWidget {
 }
 
 class _DeviceScreenState extends State<DeviceScreen> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   List<Model> allModel = modelList;
+  String _selectedState = "Đang sử dụng";
+  var state = {
+    'Đang sử dụng': 'ĐSD',
+    'Đang báo hỏng': 'ĐBH',
+    'Đang sửa chữa': 'ĐSC',
+    'Ngừng sử dụng': 'NSD',
+    'Đã thanh lý': 'ĐTL'
+  };
+  final String _selectedDepart = "Khoa mắt";
+  var department = {
+    'Khoa mắt': 'KM',
+    'Khoa ung thư': 'UT',
+    'Phụ khoa': 'PK',
+  };
+  List departments = [];
+  departDependentDropDown() {
+    state.forEach((key, value) {
+      states.add(key);
+    });
+  }
+
+  List states = [];
+  StateDependentDropDown() {
+    state.forEach((key, value) {
+      states.add(key);
+    });
+  }
+
+  List<Data?> api = [];
+  @override
+  void initState() {
+    super.initState();
+    StateDependentDropDown();
+    //getData();
+  }
+//  Future<List<Data>> getData() async {
+//     final result = await DemoAPI().dioGetData();
+//     return result;
+//   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Thiết Bị'),
+          title: const Text('Thiết Bị'),
           centerTitle: true,
         ),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -34,15 +74,15 @@ class _DeviceScreenState extends State<DeviceScreen> {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      margin: EdgeInsets.only(top: 20, left: 20),
-                      decoration: BoxDecoration(
+                      margin: const EdgeInsets.only(top: 20, left: 20),
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
                         onChanged: searchDevice,
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 137, 37, 37)),
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 137, 37, 37)),
                         maxLength: 500,
                         controller: _textEditingController,
                         decoration: const InputDecoration(
@@ -56,7 +96,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                               borderSide: BorderSide(width: 0.8),
                             ),
                             //border: InputBorder.none,
-                            
+
                             hintText: 'Tên thiết bị,mã thiết bị,...',
                             prefixIcon: Icon(
                               Icons.search,
@@ -65,7 +105,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                             //  focusedBorder: UnderlineInputBorder(
                             //  borderSide: BorderSide(color: Colors.blue), // Viền khi focus
                             //  )
-                            
+
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30),
@@ -88,20 +128,20 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     flex: 1,
                     child: Container(
                         height: 49,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
                               bottomRight: Radius.circular(30)),
                           color: Color.fromARGB(255, 194, 190, 190),
                         ),
-                        margin: EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                        margin:
+                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             'Tìm kiếm',
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
-                          onPressed: () {                           
-                          },
+                          onPressed: () {},
                         )),
                   ),
                 ],
@@ -111,115 +151,88 @@ class _DeviceScreenState extends State<DeviceScreen> {
                   Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 10),
+                        margin: const EdgeInsets.only(top: 5, left: 10),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Trạng thái',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20))),
-                                      builder: (context) => Container(
-                                            child: Container(
-                                              padding: EdgeInsets.all(20),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    'Lọc Trạng Thái',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                },
-                                child: Container(
-                                  height: 30,
-                                  margin: EdgeInsets.all(10),
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 232, 230, 230),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30),
-                                          bottomRight: Radius.circular(30))),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                        'Tất cả',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 17),
-                                      )),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down)
-                                    ],
-                                  ),
-                                ))
+                            Container(
+                                height: 40,
+                                margin: const EdgeInsets.all(10),
+                                width: 150,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 232, 230, 230),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        topRight: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30),
+                                        bottomRight: Radius.circular(30))),
+                                alignment: Alignment.center,
+                                child: DropdownButton(
+                                    underline: Container(),
+                                    value: _selectedState,
+                                    items: states.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _selectedState = "$newValue";
+                                        selectedFilter = "$newValue";
+                                        searchStateDevice();
+                                      });
+                                    }))
                           ],
                         ),
                       )),
                   Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 10),
+                        margin: const EdgeInsets.only(top: 5, left: 10),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Khoa phòng',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
-                            TextButton(
-                                onPressed: () {},
-                                child: Container(
-                                  height: 30,
-                                  margin: EdgeInsets.all(10),
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 232, 230, 230),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30),
-                                          bottomRight: Radius.circular(30))),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                        'Tất cả',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 17),
-                                      )),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down)
-                                    ],
-                                  ),
-                                ))
+                            Container(
+                                height: 30,
+                                margin: const EdgeInsets.all(10),
+                                width: 120,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 232, 230, 230),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        topRight: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30),
+                                        bottomRight: Radius.circular(30))),
+                                alignment: Alignment.center,
+                                child: DropdownButton(
+                                    underline: Container(),
+                                    value: _selectedDepart,
+                                    items: departments.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      //   setState(() {
+                                      //     _selectedDepart = "$newValue";
+                                      //     selectedFilterDepart = "$newValue";
+                                      //     searchDepartDevice();
+                                      //   });
+                                    }))
                           ],
                         ),
                       ))
@@ -228,8 +241,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
               Row(
                 children: [
                   Container(
-                      margin: EdgeInsets.only(left: 30),
-                      child: Text(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Text(
                         'Bấm vào để xem chi tiết',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w200),
@@ -237,71 +250,84 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 ],
               ),
               Flexible(
-                  child: ListView.builder(
-                      //shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: allModel.length,
-                      itemBuilder: (context, index) {
-                        Model _model = allModel[index];
-                        return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsScreen(_model)));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(20),
-                              padding: EdgeInsets.only(right: 30, left: 30),
-                              height: 80,
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 241, 239, 239),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                //mainAxisAlignment:MainAxisAlignment.spaceAround,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/logo-bo-y-te.jpg'),
-                                    radius: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        _model.titile,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
+                  child: FutureBuilder<GetDataModel?>(
+                      future: DemoAPI().dioGetData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot.data!.data!.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             DetailsScreen(model)));
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.all(20),
+                                      padding: const EdgeInsets.only(
+                                          right: 30, left: 30),
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 241, 239, 239),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Row(
+                                        children: [
+                                          const CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                                'assets/images/logo-bo-y-te.jpg'),
+                                            radius: 30,
+                                          ),
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                snapshot.data!.data![index].title,
+                                                style: const TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Model: ${snapshot.data!.data![index].model}',
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              Text(
+                                                'Serial: ${snapshot.data!.data![index].serial}',
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              Text(
+                                                  'Trạng thái: ${snapshot.data!.data![index].status}',
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400)),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        'Model: ' + _model.model,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        'Serial: ' + _model.serial,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text('Trạng thái: ' + _model.description,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ));
+                                    ));
+                              });
+                        } else
+                          return Container(child: Text('error'));
                       }))
             ])));
   }
@@ -316,4 +342,29 @@ class _DeviceScreenState extends State<DeviceScreen> {
       allModel = suggestions;
     });
   }
+
+  static String selectedFilter = "Đang sử dụng";
+  void searchStateDevice() {
+    final suggestions = modelList.where((element) {
+      final modelTitile = element.description.toLowerCase();
+      final input = selectedFilter.toLowerCase();
+      return modelTitile.contains(input);
+    }).toList();
+    setState(() {
+      allModel = suggestions;
+    });
+  }
+
+  // static String selectedFilterDepart = "Phu khoa";
+  // void searchDepartDevice() {
+  //   final suggestions = departmentList.where((element) {
+  //     final modelTitile = element.name.toLowerCase();
+  //     final input = selectedFilterDepart.toLowerCase();
+  //     return modelTitile.contains(input);
+  //   }).toList();
+
+  //   setState(() {
+  //     allModel = suggestions.equip;
+  //   });
+  // }
 }

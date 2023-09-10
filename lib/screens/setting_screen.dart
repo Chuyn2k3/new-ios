@@ -38,13 +38,13 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Cài Đặt'),
+          title: const Text('Cài Đặt'),
           centerTitle: true,
         ),
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20), topLeft: Radius.circular(20))),
@@ -52,19 +52,21 @@ class _SettingScreenState extends State<SettingScreen> {
             children: [
               Container(
                 margin:
-                    EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
+                    const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
                 height: 190,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 234, 231, 231)),
+                    color: const Color.fromARGB(255, 234, 231, 231)),
                 child: Column(children: [
                   Container(
                       height: 70,
                       width: double.infinity,
+                      margin: const EdgeInsets.only(top: 5, right: 10, left: 10),
+                      alignment: Alignment.center,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Row(
+                          const Row(
                             //mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
@@ -87,15 +89,13 @@ class _SettingScreenState extends State<SettingScreen> {
                                 onChanged: toggleSwitchKey,
                                 activeColor: Colors.blue,
                                 activeTrackColor:
-                                    Color.fromARGB(255, 171, 206, 235),
+                                    const Color.fromARGB(255, 171, 206, 235),
                                 inactiveThumbColor:
                                     const Color.fromARGB(255, 234, 231, 231),
                                 inactiveTrackColor: Colors.grey,
                               )),
                         ],
-                      ),
-                      margin: EdgeInsets.only(top: 5, right: 10, left: 10),
-                      alignment: Alignment.center),
+                      )),
                   Divider(
                     //Divider tạo dòng kẻ ngang
                     color: Colors.blue[700], // Màu của dòng kẻ
@@ -106,9 +106,11 @@ class _SettingScreenState extends State<SettingScreen> {
                   Container(
                     height: 70,
                     width: double.infinity,
+                    margin: const EdgeInsets.only(top: 5, right: 10, left: 10),
+                    alignment: Alignment.center,
                     child: Stack(
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             SizedBox(
                               width: 20,
@@ -131,15 +133,13 @@ class _SettingScreenState extends State<SettingScreen> {
                               onChanged: toggleSwitch,
                               activeColor: Colors.blue,
                               activeTrackColor:
-                                  Color.fromARGB(255, 171, 206, 235),
+                                  const Color.fromARGB(255, 171, 206, 235),
                               inactiveThumbColor:
                                   const Color.fromARGB(255, 234, 231, 231),
                               inactiveTrackColor: Colors.grey,
                             )),
                       ],
                     ),
-                    margin: EdgeInsets.only(top: 5, right: 10, left: 10),
-                    alignment: Alignment.center,
                   ),
                 ]),
               ),

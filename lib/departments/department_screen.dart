@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 //import 'package:appdemo/models/model.dart';
 //import 'package:appdemo/models/detail_screen.dart';
@@ -18,11 +17,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Khoa phòng'),
+          title: const Text('Khoa phòng'),
           centerTitle: true,
         ),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -34,20 +33,20 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: departmentList.length,
                       itemBuilder: (context, index) {
-                        Department _department = departmentList[index];
+                        Department department = departmentList[index];
                         return Container(
                             child: Container(
-                          margin: EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(20),
                           //padding: EdgeInsets.only(right: 30, left: 30),
                           height: 235,
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 241, 239, 239),
+                              color: const Color.fromARGB(255, 241, 239, 239),
                               borderRadius: BorderRadius.circular(20)),
                           child: Column(
                             children: [
                               Container(
                                 height: 40,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20),
@@ -55,8 +54,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  _department.name,
-                                  style: TextStyle(
+                                  department.name,
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -65,7 +64,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                               GestureDetector(
                                   onTap: () {},
                                   child: Container(
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                         top: 10, bottom: 5, left: 15, right: 5),
                                     child: Stack(
                                       alignment: Alignment.center,
@@ -73,18 +72,18 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                         Container(
                                           child: Row(
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 7,
                                               ),
-                                              Icon(
+                                              const Icon(
                                                 Icons.email_outlined,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                               Text(
-                                                _department.email,
-                                                style: TextStyle(
+                                                department.email,
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     color: Colors.black,
                                                     fontWeight:
@@ -93,7 +92,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                             ],
                                           ),
                                         ),
-                                        Positioned(
+                                        const Positioned(
                                             right: 5,
                                             child: Icon(
                                                 Icons.keyboard_arrow_right))
@@ -110,7 +109,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                               GestureDetector(
                                 onTap: () {},
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 5, bottom: 5, left: 15, right: 5),
                                   child: Stack(
                                     alignment: Alignment.center,
@@ -118,18 +117,18 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                       Container(
                                         child: Row(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 7,
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.phone_android_outlined,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
                                             Text(
-                                              _department.sdt,
-                                              style: TextStyle(
+                                              department.sdt,
+                                              style: const TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w400),
@@ -137,7 +136,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                           ],
                                         ),
                                       ),
-                                      Positioned(
+                                      const Positioned(
                                           right: 5,
                                           child:
                                               Icon(Icons.keyboard_arrow_right))
@@ -157,7 +156,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                   
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 5, bottom: 5, left: 15, right: 5),
                                   child: Stack(
                                     alignment: Alignment.center,
@@ -165,18 +164,18 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                       Container(
                                         child: Row(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 7,
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.location_on_outlined,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
                                             Text(
-                                              _department.address,
-                                              style: TextStyle(
+                                              department.address,
+                                              style: const TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w400),
@@ -184,7 +183,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                           ],
                                         ),
                                       ),
-                                      Positioned(
+                                      const Positioned(
                                           right: 5,
                                           child:
                                               Icon(Icons.keyboard_arrow_right))
@@ -202,13 +201,13 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                               GestureDetector(
                                 onTap: () {},
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 5, bottom: 5, left: 15, right: 5),
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: [
                                       Container(
-                                        child: Row(
+                                        child: const Row(
                                           children: [
                                             SizedBox(
                                               width: 7,
@@ -229,7 +228,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                           ],
                                         ),
                                       ),
-                                      Positioned(
+                                      const Positioned(
                                           right: 5,
                                           child:
                                               Icon(Icons.keyboard_arrow_right))

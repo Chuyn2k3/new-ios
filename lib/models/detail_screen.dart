@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen(this.models);
+  const DetailsScreen(this.models, {super.key});
   final Model models;
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -18,13 +18,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           elevation: 0,
-          title: Text('Thiết Bị'),
+          title: const Text('Thiết Bị'),
           centerTitle: true,
         ),
         body: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
@@ -32,10 +32,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
             child: ListView(children: [
               Column(children: [
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: double.infinity,
                   height: 480,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 244, 242, 242),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(20),
@@ -44,40 +44,40 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           bottomRight: Radius.circular(20))),
                   child: Column(children: [
                     CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 230, 228, 228),
+                      radius: 60,
                       child: CircleAvatar(
+                        radius: 40,
                         child: Image.asset(
                             'assets/images/rounded-in-photoretrica.png'),
-                        radius: 40,
                       ),
-                      backgroundColor: Color.fromARGB(255, 230, 228, 228),
-                      radius: 60,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      this.widget.models.titile,
-                      style: TextStyle(
+                      widget.models.titile,
+                      style: const TextStyle(
                           fontSize: 20,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                     Container(
                       height: 40,
-                      margin: EdgeInsets.all(20),
-                      child: Text(this.widget.models.description,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500)),
+                      margin: const EdgeInsets.all(20),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: (this.widget.models.description == ('Mới')) ||
-                                  (this.widget.models.description ==
+                          color: (widget.models.description == ('Mới')) ||
+                                  (widget.models.description ==
                                       ('Đang sử dụng'))
-                              ? Color.fromARGB(255, 25, 208, 34)
+                              ? const Color.fromARGB(255, 25, 208, 34)
                               : Colors.red),
+                      child: Text(widget.models.description,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
                     ),
                     Divider(
                       //Divider tạo dòng kẻ ngang
@@ -87,12 +87,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -109,13 +109,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.model,
-                                      style: TextStyle(
+                                  Text(widget.models.model,
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.serial,
-                                      style: TextStyle(
+                                  Text(widget.models.serial,
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -130,12 +130,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -152,13 +152,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.yearMan.toString(),
-                                      style: TextStyle(
+                                  Text(widget.models.yearMan.toString(),
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.yearUse.toString(),
-                                      style: TextStyle(
+                                  Text(widget.models.yearUse.toString(),
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -173,12 +173,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       endIndent: 20, // Khoảng cách từ lề phải
                     ),
                     Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, right: 30, left: 30, bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -195,13 +195,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(this.widget.models.manufacturer,
-                                      style: TextStyle(
+                                  Text(widget.models.manufacturer,
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(this.widget.models.origin,
-                                      style: TextStyle(
+                                  Text(widget.models.origin,
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black))
@@ -212,11 +212,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 Container(
                   width: double.infinity,
-                  child: Text('Lịch sử báo hỏng thiết bị',
+                  margin:
+                      const EdgeInsets.only(top: 0, bottom: 5, right: 10, left: 10),
+                  child: const Text('Lịch sử báo hỏng thiết bị',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  margin:
-                      EdgeInsets.only(top: 0, bottom: 5, right: 10, left: 10),
                 ),
                 GestureDetector(
                   onTap: () {},
@@ -225,8 +225,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Color.fromARGB(255, 208, 204, 204)),
-                      child: Stack(
+                          color: const Color.fromARGB(255, 208, 204, 204)),
+                      margin: const EdgeInsets.only(
+                          top: 5, bottom: 5, right: 10, left: 10),
+                      alignment: Alignment.center,
+                      child: const Stack(
                         alignment: Alignment.center,
                         children: [
                           Row(
@@ -247,19 +250,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      margin: EdgeInsets.only(
-                          top: 5, bottom: 5, right: 10, left: 10),
-                      alignment: Alignment.center),
+                      )),
                 ),
                 Container(
                   width: double.infinity,
-                  child: Text(
+                  margin:
+                      const EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10),
+                  child: const Text(
                     'Lịch sử kiểm kê thiết bị',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  margin:
-                      EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10),
                 ),
                 GestureDetector(
                     onTap: () {},
@@ -268,8 +268,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: Color.fromARGB(255, 208, 204, 204)),
-                        child: Stack(
+                            color: const Color.fromARGB(255, 208, 204, 204)),
+                        margin: const EdgeInsets.only(
+                            top: 5, bottom: 5, right: 10, left: 10),
+                        alignment: Alignment.center,
+                        child: const Stack(
                           alignment: Alignment.center,
                           children: [
                             Row(
@@ -290,38 +293,35 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                             ),
                           ],
-                        ),
-                        margin: EdgeInsets.only(
-                            top: 5, bottom: 5, right: 10, left: 10),
-                        alignment: Alignment.center)),
-                ((this.widget.models.description == 'Đang báo hỏng') ||
-                        (this.widget.models.description == 'Đã thanh lý') ||
-                        (this.widget.models.description == 'Đang sửa chữa') ||
-                        (this.widget.models.description == 'Ngưng sử dụng'))
+                        ))),
+                ((widget.models.description == 'Đang báo hỏng') ||
+                        (widget.models.description == 'Đã thanh lý') ||
+                        (widget.models.description == 'Đang sửa chữa') ||
+                        (widget.models.description == 'Ngưng sử dụng'))
                     ? GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      InventoryScreen(this.widget.models)));
+                                      InventoryScreen(widget.models)));
                         },
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           alignment: Alignment.center,
                           width: double.infinity,
                           height: 45,
-                          child: Text('Kiểm kê',
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.blue),
+                          child: const Text('Kiểm kê',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white)),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blue),
                         ))
                     : Container(
-                        margin: EdgeInsets.all(30),
+                        margin: const EdgeInsets.all(30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -332,7 +332,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => ReportScreen(
-                                              this.widget.models)));
+                                              widget.models)));
                                 },
                                 child: Container(
                                     alignment: Alignment.center,
@@ -341,7 +341,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: Colors.blue),
-                                    child: Text(
+                                    child: const Text(
                                       'Báo Hỏng',
                                       style: TextStyle(
                                           fontSize: 18,
@@ -350,7 +350,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     )),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30,
                             ),
                             Expanded(
@@ -360,7 +360,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      InventoryScreen(this.widget.models)));
+                                      InventoryScreen(widget.models)));
                               },
                               child: Container(
                                   alignment: Alignment.center,
@@ -369,7 +369,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.blue),
-                                  child: Text('Kiểm Kê',
+                                  child: const Text('Kiểm Kê',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,

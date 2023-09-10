@@ -1,3 +1,4 @@
+import 'package:appdemo/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:appdemo/screens/Myhome_screen.dart';
 
@@ -9,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final api = DemoAPI();
   final _formfield = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passController = TextEditingController();
@@ -20,7 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
                 child: SafeArea(
                     child: Form(
                   key: _formfield,
@@ -33,12 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 100,
                         height: 100,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.email),
@@ -47,22 +50,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           bool emailVaild = RegExp(
                                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(value!);
-                          if (value!.isEmpty) {
+                          if (value.isEmpty) {
                             return "Nhập email";
                           } else if (!emailVaild) {
                             return "Nhập email hợp lệ";
                           }
+                          return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: passController,
                         keyboardType: TextInputType.text,
                         obscureText: passToggle,
                         decoration: InputDecoration(
                             labelText: 'Mật khẩu',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.lock),
+                            border: const OutlineInputBorder(),
+                            prefixIcon: const Icon(Icons.lock),
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
@@ -76,19 +80,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Nhập mật khẩu";
-                          }
-                          else if (passController.text.length < 6) {
+                          } else if (passController.text.length < 6) {
                             return "Mật khẩu phải dài hơn 6 ký tự";
                           }
+                          return null;
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Quên mật khẩu',
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w200),
@@ -107,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   toggleable: true, //giup bat tat button
                                 ),
-                                Text(
+                                const Text(
                                   'Ghi nhớ',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -116,26 +120,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ]),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           if (_formfield.currentState!.validate()) {
                             emailController.clear();
                             passController.clear();
-                            Navigator.pushNamedAndRemoveUntil(context, MyhomeScreen.routeName,(route)=>false);
+                            await DemoAPI().diologin();
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                MyhomeScreen.routeName, (route) => false);
                           }
                         },
                         child: Container(
                             height: 50,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.blueAccent,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   bottomRight: Radius.circular(20)),
                             ),
-                            child: Center(
+                            child: const Center(
                                 child: Text(
                               'ĐĂNG NHẬP',
                               style: TextStyle(

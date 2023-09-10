@@ -1,6 +1,5 @@
 import 'package:appdemo/screens/home_screen.dart';
 import 'package:appdemo/screens/info_screen.dart';
-import 'package:appdemo/screens/login_screen.dart';
 import 'package:appdemo/screens/qr_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +17,9 @@ class _MyhomeScreenState extends State<MyhomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex,
-      children: [HomeScreen(),QRScreen(),InfoScreen()]),
+      children: const [HomeScreen(),InfoScreen()]),
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -28,7 +27,7 @@ class _MyhomeScreenState extends State<MyhomeScreen> {
           });
         },
         iconSize: 30,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Trang chủ',

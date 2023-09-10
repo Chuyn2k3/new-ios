@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:appdemo/models/model.dart';
 class Department {
   late String name;

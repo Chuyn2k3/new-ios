@@ -1,7 +1,5 @@
 import 'package:appdemo/departments/department_screen.dart';
-import 'package:appdemo/models/detail_screen.dart';
 import 'package:appdemo/screens/info_screen.dart';
-import 'package:appdemo/screens/login_screen.dart';
 import 'package:appdemo/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:appdemo/screens/device_screen.dart';
@@ -25,15 +23,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Fuction> fuc = const <Fuction>[
-    const Fuction(title: "Thiết Bị", icon: Icons.local_hospital),
-    const Fuction(title: "Báo Hỏng", icon: Icons.notifications_active),
-    const Fuction(title: "Khoa Phòng", icon: Icons.business),
-    const Fuction(title: "Nhân Viên", icon: Icons.person),
-    const Fuction(title: "Thống Kê", icon: Icons.bar_chart),
-    const Fuction(title: "Kiểm kê", icon: Icons.inventory),
+    Fuction(title: "Thiết Bị", icon: Icons.local_hospital),
+    Fuction(title: "Báo Hỏng", icon: Icons.notifications_active),
+    Fuction(title: "Khoa Phòng", icon: Icons.business),
+    Fuction(title: "Nhân Viên", icon: Icons.person),
+    Fuction(title: "Thống Kê", icon: Icons.bar_chart),
+    Fuction(title: "Kiểm kê", icon: Icons.inventory),
   ];
-  int _currentIndex = 0;
-  List page = [HomeScreen(), InfoScreen()];
+  final int _currentIndex = 0;
+  List page = [const HomeScreen(), const InfoScreen()];
   DateTime pre_backpress=DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -42,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
         final timegap=DateTime.now().difference(pre_backpress);
         print('$timegap');
         pre_backpress=DateTime.now();
-        final canExit=timegap>=Duration(seconds: 2);
+        final canExit=timegap>=const Duration(seconds: 2);
         if(canExit){
-               final snack=SnackBar(content: Text('Ấn 2 lần để thoát'),duration: Duration(seconds: 2),);
+               const snack=SnackBar(content: Text('Ấn 2 lần để thoát'),duration: Duration(seconds: 2),);
                ScaffoldMessenger.of(context).showSnackBar(snack);
                return false;
                //final snack=SnackBar(content: Text('Ấn 2 lần để thoát'),duration: Duration(seconds: 2),);
@@ -58,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(children: [
         Column(children: [
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Row(
@@ -67,17 +65,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       CircleAvatar(
-                        child: CircleAvatar(
-                          child: Image.asset('assets/images/logo-bo-y-te.jpg'),
-                          radius: 14,
-                        ),
                         radius: 25,
                         backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 14,
+                          child: Image.asset('assets/images/logo-bo-y-te.jpg'),
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -108,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pushNamed(
                             context, NotificationScreen.routeName);
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.notifications,
                         color: Colors.yellow,
                         size: 45,
@@ -118,20 +116,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         ]),
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         Positioned.fill(
             top: 100,
             //bottom: 55,
             child: Container(
               height: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25))),
               child: GridView(
                 padding:
-                    EdgeInsets.only(top: 20, right: 60, left: 60, bottom: 30),
+                    const EdgeInsets.only(top: 20, right: 60, left: 60, bottom: 30),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 50,
+                    crossAxisSpacing: 50),
                 children: [
                   InkWell(
                     highlightColor: Colors.grey, //hiệu ứng khi giữ lâu
@@ -142,15 +144,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.medical_services,
                             size: 60,
-                            color: const Color.fromARGB(255, 238, 52, 39),
+                            color: Color.fromARGB(255, 238, 52, 39),
                           ),
                           Text(
                             "Thiết Bị",
@@ -170,9 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -198,9 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -226,9 +228,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -254,9 +256,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -282,9 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(237, 235, 235, 1),
+                        color: const Color.fromRGBO(237, 235, 235, 1),
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -304,10 +306,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 50,
-                    crossAxisSpacing: 50),
               ),
             )),
         // Positioned(
