@@ -1,9 +1,10 @@
+import 'package:appdemo/services/data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/models/model.dart';
+
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen(this.models, {super.key});
-  final Model models;
+  final Data models;
   static String routeName = 'report_screen';
   @override
   State<ReportScreen> createState() => _ReportScreenState();
@@ -54,12 +55,16 @@ class _ReportScreenState extends State<ReportScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      widget.models.titile,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.models.title,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Container(
                       height: 40,
@@ -67,12 +72,8 @@ class _ReportScreenState extends State<ReportScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: (widget.models.description == ('Mới')) ||
-                                  (widget.models.description ==
-                                      ('Đang sử dụng'))
-                              ? const Color.fromARGB(255, 25, 208, 34)
-                              : Colors.red),
-                      child: Text(widget.models.description,
+                          color:Colors.red),
+                      child: Text(widget.models.status,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -151,12 +152,12 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.yearMan.toString(),
+                                  Text(widget.models.yearManufacture,
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.yearUse.toString(),
+                                  Text(widget.models.yearUse,
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,

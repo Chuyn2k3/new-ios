@@ -1,5 +1,9 @@
+import 'package:appdemo/models/inventory_screen.dart';
+import 'package:appdemo/screens/qr_screen.dart';
+import 'package:appdemo/services/api.dart';
+import 'package:appdemo/services/data_model.dart';
+import 'package:appdemo/services/get_data_list.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/models/model.dart';
 import 'package:appdemo/models/detail_screen.dart';
 
 class myInventoryScreen extends StatefulWidget {
@@ -11,6 +15,26 @@ class myInventoryScreen extends StatefulWidget {
 
 class _myInventoryScreenState extends State<myInventoryScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  bool isLoading = false;
+
+  Future<List<Data>?> DataList() async {
+    final List<Data>? dataList = await getDataFromApi();
+
+    // Lọc danh sách dựa trên điều kiện
+    return dataList;
+  }
+
+  List<Data> _devices = [];
+  void fetchData() async {
+    _devices = (await DataList())!;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +62,7 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
+                        onChanged: searchDevice,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 137, 37, 37)),
                         maxLength: 500,
@@ -78,26 +103,30 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        height: 49,
+                        height: 49.55,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
                               bottomRight: Radius.circular(30)),
                           color: Color.fromARGB(255, 194, 190, 190),
                         ),
-                        margin: const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                        margin:
+                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
                         child: TextButton(
                           child: const Text(
                             'Tìm kiếm',
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            searchDevice(
+                                _textEditingController.text.toString());
+                          },
                         )),
                   ),
                 ],
               ),
               GestureDetector(
-                  onTap: () {},
+                  onTap: () {Navigator.pushNamed(context, QRScreen.routeName);},
                   child: Container(
                       height: 40,
                       width: double.infinity,
@@ -140,72 +169,125 @@ class _myInventoryScreenState extends State<myInventoryScreen> {
                       ))
                 ],
               ),
-              Flexible(
-                  child: ListView.builder(
-                      //shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: modelList.length,
-                      itemBuilder: (context, index) {
-                        Model model = modelList[index];
-                        return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsScreen(model)));
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              padding: const EdgeInsets.only(right: 30, left: 30),
-                              height: 80,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 241, 239, 239),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/logo-bo-y-te.jpg'),
-                                    radius: 30,
-                                  ),
-                                  const SizedBox(
-                                    width: 30,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        model.titile,
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        'Model: ${model.model}',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        'Serial: ${model.serial}',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text('Trạng thái: ${model.description}',
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ));
-                      }))
+              isLoading
+                  ? Container(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Flexible(
+                      child: FutureBuilder<GetDataModel?>(
+                          future: DemoAPI().dioGetData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  //shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: _devices.length,
+                                  itemBuilder: (context, index) {
+                                    if (_devices.length != 0) {
+                                      return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        InventoryScreen(
+                                                            _devices[index])));
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.all(20),
+                                            padding: const EdgeInsets.only(
+                                                right: 30, left: 30),
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 241, 239, 239),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Expanded(
+                                              child: Row(
+                                                children: [
+                                                  const CircleAvatar(
+                                                    backgroundImage: AssetImage(
+                                                        'assets/images/logo-bo-y-te.jpg'),
+                                                    radius: 30,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 30,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          _devices[index].title,
+                                                          style: const TextStyle(
+                                                              fontSize: 15,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          'Model: ${_devices[index].model}',
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        ),
+                                                        Text(
+                                                          'Serial: ${_devices[index].serial}',
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        ),
+                                                        Text(
+                                                            'Trạng thái: ${_devices[index].status}',
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400)),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ));
+                                    } else
+                                      return Container(
+                                        child: Text('Không có thiết bị này'),
+                                      );
+                                  });
+                            } else
+                              return Container(
+                                  child: CircularProgressIndicator());
+                          }))
             ])));
+  }
+
+  void searchDevice(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+    final List<Data>? result = await getDataFromApi();
+    final suggestions = result!.where((element) {
+      final deviceTitle = element.title.toLowerCase();
+      final input = query.toLowerCase();
+      return deviceTitle.contains(input);
+    }).toList();
+    setState(() {
+      _devices = suggestions;
+      isLoading = false;
+    });
   }
 }

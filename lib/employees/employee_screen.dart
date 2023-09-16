@@ -1,5 +1,8 @@
+import 'package:appdemo/employees/employee_model.dart';
+import 'package:appdemo/employees/get_employee_list.dart';
+import 'package:appdemo/services/api.dart';
+import 'package:appdemo/services/department_model.dart';
 import 'package:flutter/material.dart';
-import "package:appdemo/employees/employee.dart";
 
 class EmployeeScreen extends StatefulWidget {
   const EmployeeScreen({super.key});
@@ -10,6 +13,24 @@ class EmployeeScreen extends StatefulWidget {
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  Future<List<EmployeeData>?> DataList() async {
+    final List<EmployeeData>? dataList = await getDataEmployeeFromApi();
+
+    // Lọc danh sách dựa trên điều kiện
+    return dataList;
+  }
+
+  List<EmployeeData> _employee = [];
+  void fetchEmployeeData() async {
+    _employee = (await DataList())!;
+  }
+
+  bool isLoading = false;
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +58,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
+                        onChanged: searchEmployee,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 137, 37, 37)),
                         maxLength: 500,
@@ -84,13 +106,17 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                               bottomRight: Radius.circular(30)),
                           color: Color.fromARGB(255, 194, 190, 190),
                         ),
-                        margin: const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                        margin:
+                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
                         child: TextButton(
                           child: const Text(
                             'Tìm kiếm',
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            searchEmployee(
+                                _textEditingController.text.toString());
+                          },
                         )),
                   ),
                 ],
@@ -106,86 +132,132 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       ))
                 ],
               ),
-              Flexible(
-                  child: ListView.builder(
-                      //shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: employeeList.length,
-                      itemBuilder: (context, index) {
-                        Employee employee = employeeList[index];
-                        return GestureDetector(
-                            onTap: () {                             
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              padding: const EdgeInsets.only(right: 30, left: 30),
-                              height: 100,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 241, 239, 239),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(                              
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/logo-bo-y-te.jpg'),
-                                    radius: 30,
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        employee.name,
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      const SizedBox(height: 10,),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.email_outlined,size: 17),
-                                          const SizedBox(width: 5,),
-                                          GestureDetector(
-                                            onTap:() {
-                                              
-                                            },
-                                           child: Text(
-                                               employee.email,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500),
+              isLoading? Container(child: CircularProgressIndicator(),)
+              :Flexible(
+                  child: FutureBuilder<EmployeeModel?>(
+                      future: DemoAPI().dioGetEmployeeData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                              //shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: _employee.length,
+                              itemBuilder: (context, index) {
+                                if (_employee.length != 0) {
+                                  return GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        margin: const EdgeInsets.all(20),
+                                        padding: const EdgeInsets.only(
+                                            right: 30, left: 30),
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 241, 239, 239),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Row(
+                                          children: [
+                                            const CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                  'assets/images/logo-bo-y-te.jpg'),
+                                              radius: 30,
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(height:10),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.phone_android_outlined,size: 17,),
-                                          const SizedBox(width: 5,),
-                                          GestureDetector(
-                                          onTap:() {
-                                            
-                                          },
-                                          child:Text(
-                                            employee.phone,
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500),
-                                          ),)
-                                        ],
-                                      ),                                     
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ));
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    _employee[index].displayname,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                          Icons.email_outlined,
+                                                          size: 17),
+                                                      const SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {},
+                                                        child: Text(
+                                                          _employee[index].email,
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons
+                                                            .phone_android_outlined,
+                                                        size: 17,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {},
+                                                        child: Text(
+                                                          _employee[index].phone,
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                } else
+                                  return Container(
+                                      child: Text('Không tìm thấy nhân viên'));
+                              });
+                        } else
+                          return Container(child: CircularProgressIndicator());
                       }))
             ])));
+  }
+
+  void searchEmployee(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+    final List<EmployeeData>? result = await getDataEmployeeFromApi();
+    final suggestions = result!.where((element) {
+      final employeeTitle = element.displayname!.toLowerCase();
+      final input = query.toLowerCase();
+      return employeeTitle.contains(input);
+    }).toList();
+    setState(() {
+      _employee = suggestions;
+      isLoading = false;
+    });
   }
 }

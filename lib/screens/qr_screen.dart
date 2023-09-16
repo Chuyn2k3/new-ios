@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:appdemo/screens/myhome_screen.dart';
 class QRScreen extends StatefulWidget {
   const QRScreen({super.key});
   static String routeName = 'qr_screen';
@@ -36,7 +36,6 @@ class _QRScreenState extends State<QRScreen> {
         title: const Text('QR Code Scanner'),
         centerTitle: true,
         elevation: 0,
-        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
@@ -54,7 +53,7 @@ class _QRScreenState extends State<QRScreen> {
                   style: const TextStyle(fontSize: 18),
                 ),
               )),
-          Expanded(           
+          Expanded(
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +68,9 @@ class _QRScreenState extends State<QRScreen> {
                   },
                   child: const Text('Copy'),
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (result.isNotEmpty) {

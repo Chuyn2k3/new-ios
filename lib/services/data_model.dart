@@ -40,16 +40,16 @@ class Data {
     dynamic userId;
     String? createdAt;
     String? updatedAt;
-    String? model;
-    String? yearManufacture;
+    late String model;
+    late String yearManufacture;
     dynamic warehouse;
     String? code;
-    String? serial;
-    String? status;
+    late String serial;
+    late String status;
     dynamic risk;
     int? amount;
-    String? manufacturer;
-    String? origin;
+    late String manufacturer;
+    late String origin;
     dynamic maintenanceId;
     dynamic providerId;
     dynamic repairId;
@@ -66,7 +66,7 @@ class Data {
     dynamic firstValue;
     dynamic presentValue;
     String? process;
-    String? yearUse;
+    late String yearUse;
     int? officerChargeId;
     dynamic officersUseId;
     String? firstInformation;
@@ -105,7 +105,7 @@ class Data {
     String? nextLicenseRenewalOfRadiationWork;
     String? hashcode;
 
-    Data({this.id,required this.title, this.slug, this.alt, this.path, this.content, this.type, this.userId, this.createdAt, this.updatedAt, this.model, this.yearManufacture, this.warehouse, this.code, this.serial, this.status, this.risk, this.amount, this.manufacturer, this.origin, this.maintenanceId, this.providerId, this.repairId, this.cateId, this.devicesId, this.unitId, this.departmentId, this.image, this.lastInspection, this.nextInspection, this.lastMaintenance, this.nextMaintenance, this.specificat, this.firstValue, this.presentValue, this.process, this.yearUse, this.officerChargeId, this.officersUseId, this.firstInformation, this.importPrice, this.bidProjectId, this.warrantyDate, this.configurat, this.depreciat, this.note, this.officerDepartmentChargeId, this.officersTrainingId, this.supplieId, this.regularInspection, this.regularMaintenance, this.parentId, this.dateFailure, this.reason, this.criticalLevel, this.dateDelivery, this.liquidationDate, this.datePersonId, this.updateDay, this.funding, this.periodicRadiationInspection, this.lastRadiationInspection, this.nextRadiationInspection, this.jvContractTerminationDate, this.periodOfExternalQualityAssessment, this.lastExternalQualityAssessment, this.nextExternalQualityAssessment, this.periodOfClinicEnvironmentInspection, this.lastClinicEnvironmentInspection, this.nextClinicEnvironmentInspection, this.periodOfLicenseRenewalOfRadiationWork, this.lastLicenseRenewalOfRadiationWork, this.nextLicenseRenewalOfRadiationWork, this.hashcode});
+    Data({this.id,required this.title, this.slug, this.alt, this.path, this.content, this.type, this.userId, this.createdAt, this.updatedAt,required this.model,required this.yearManufacture, this.warehouse, this.code,required this.serial,required this.status, this.risk, this.amount,required this.manufacturer,required this.origin, this.maintenanceId, this.providerId, this.repairId, this.cateId, this.devicesId, this.unitId, this.departmentId, this.image, this.lastInspection, this.nextInspection, this.lastMaintenance, this.nextMaintenance, this.specificat, this.firstValue, this.presentValue, this.process,required this.yearUse, this.officerChargeId, this.officersUseId, this.firstInformation, this.importPrice, this.bidProjectId, this.warrantyDate, this.configurat, this.depreciat, this.note, this.officerDepartmentChargeId, this.officersTrainingId, this.supplieId, this.regularInspection, this.regularMaintenance, this.parentId, this.dateFailure, this.reason, this.criticalLevel, this.dateDelivery, this.liquidationDate, this.datePersonId, this.updateDay, this.funding, this.periodicRadiationInspection, this.lastRadiationInspection, this.nextRadiationInspection, this.jvContractTerminationDate, this.periodOfExternalQualityAssessment, this.lastExternalQualityAssessment, this.nextExternalQualityAssessment, this.periodOfClinicEnvironmentInspection, this.lastClinicEnvironmentInspection, this.nextClinicEnvironmentInspection, this.periodOfLicenseRenewalOfRadiationWork, this.lastLicenseRenewalOfRadiationWork, this.nextLicenseRenewalOfRadiationWork, this.hashcode});
 
     Data.fromJson(Map<String, dynamic> json) {
         if(json["id"] is int) {

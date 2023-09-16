@@ -1,17 +1,18 @@
 import 'package:appdemo/models/report_screen.dart';
 import 'package:appdemo/models/inventory_screen.dart';
+import 'package:appdemo/services/data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/models/model.dart';
+
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen(this.models, {super.key});
-  final Model models;
+  final Data models;
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  //final bool check = (this.widget.models.titile == 'Đang báo hỏng');
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           topLeft: Radius.circular(20),
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20))),
-                  child: Column(children: [
+                  child: Column(                   
+                    children: [
                     CircleAvatar(
                       backgroundColor: const Color.fromARGB(255, 230, 228, 228),
                       radius: 60,
@@ -55,12 +57,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      widget.models.titile,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(                     
+                        widget.models.title,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Container(
                       height: 40,
@@ -68,12 +74,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: (widget.models.description == ('Mới')) ||
-                                  (widget.models.description ==
-                                      ('Đang sử dụng'))
+                          color: (widget.models.status == ('not_handele')) ||
+                                  (widget.models.status ==
+                                      ('active'))
                               ? const Color.fromARGB(255, 25, 208, 34)
                               : Colors.red),
-                      child: Text(widget.models.description,
+                      child: Text(widget.models.status,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -152,12 +158,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.yearMan.toString(),
+                                  Text(widget.models.yearManufacture,
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.yearUse.toString(),
+                                  Text(widget.models.yearUse,
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -294,10 +300,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ],
                         ))),
-                ((widget.models.description == 'Đang báo hỏng') ||
-                        (widget.models.description == 'Đã thanh lý') ||
-                        (widget.models.description == 'Đang sửa chữa') ||
-                        (widget.models.description == 'Ngưng sử dụng'))
+                ((widget.models.status == 'Đang báo hỏng') ||
+                        (widget.models.status == 'Đã thanh lý') ||
+                        (widget.models.status == 'Đang sửa chữa') ||
+                        (widget.models.status == 'Ngưng sử dụng'))
                     ? GestureDetector(
                         onTap: () {
                           Navigator.push(
