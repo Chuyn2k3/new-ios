@@ -1,17 +1,15 @@
-import 'package:appdemo/services/data_model.dart';
+import 'package:appdemo/devices/device_model.dart';
 import 'package:flutter/material.dart';
-
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen(this.models, {super.key});
-  final Data models;
+  final DeviceData models;
   static String routeName = 'report_screen';
   @override
   State<ReportScreen> createState() => _ReportScreenState();
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  //final bool check = (this.widget.models.titile == 'Đang báo hỏng');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +70,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color:Colors.red),
+                          color: Colors.red),
                       child: Text(widget.models.status,
                           style: const TextStyle(
                               color: Colors.white,
@@ -80,11 +78,10 @@ class _ReportScreenState extends State<ReportScreen> {
                               fontWeight: FontWeight.w500)),
                     ),
                     Divider(
-                      //Divider tạo dòng kẻ ngang
-                      color: Colors.blue[700], // Màu của dòng kẻ
-                      thickness: 1.4, // Độ dày của dòng kẻ
-                      indent: 20, // Khoảng cách từ lề trái
-                      endIndent: 20, // Khoảng cách từ lề phải
+                      color: Colors.blue[700],
+                      thickness: 1.4,
+                      indent: 20,
+                      endIndent: 20,
                     ),
                     Container(
                         margin: const EdgeInsets.only(
@@ -109,12 +106,18 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.model,
+                                  Text(
+                                      (widget.models.model != null)
+                                          ? widget.models.model!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.serial,
+                                  Text(
+                                      (widget.models.serial != null)
+                                          ? widget.models.serial!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -123,11 +126,10 @@ class _ReportScreenState extends State<ReportScreen> {
                           ],
                         )),
                     Divider(
-                      //Divider tạo dòng kẻ ngang
-                      color: Colors.blue[700], // Màu của dòng kẻ
-                      thickness: 1.4, // Độ dày của dòng kẻ
-                      indent: 20, // Khoảng cách từ lề trái
-                      endIndent: 20, // Khoảng cách từ lề phải
+                      color: Colors.blue[700],
+                      thickness: 1.4,
+                      indent: 20,
+                      endIndent: 20,
                     ),
                     Container(
                         margin: const EdgeInsets.only(
@@ -152,12 +154,18 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.yearManufacture,
+                                  Text(
+                                      (widget.models.yearManufacture != null)
+                                          ? widget.models.yearManufacture!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.yearUse,
+                                  Text(
+                                      (widget.models.yearUse != null)
+                                          ? widget.models.yearUse!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -166,11 +174,10 @@ class _ReportScreenState extends State<ReportScreen> {
                           ],
                         )),
                     Divider(
-                      //Divider tạo dòng kẻ ngang
-                      color: Colors.blue[700], // Màu của dòng kẻ
-                      thickness: 1.4, // Độ dày của dòng kẻ
-                      indent: 20, // Khoảng cách từ lề trái
-                      endIndent: 20, // Khoảng cách từ lề phải
+                      color: Colors.blue[700],
+                      thickness: 1.4,
+                      indent: 20,
+                      endIndent: 20,
                     ),
                     Container(
                         margin: const EdgeInsets.only(
@@ -195,12 +202,18 @@ class _ReportScreenState extends State<ReportScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.manufacturer,
+                                  Text(
+                                      (widget.models.manufacturer != null)
+                                          ? widget.models.manufacturer!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.origin,
+                                  Text(
+                                      (widget.models.origin != null)
+                                          ? widget.models.origin!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -235,8 +248,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   ),
                 ),
                 GestureDetector(
-                    onTap: () {
-                    },
+                    onTap: () {},
                     child: Container(
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,

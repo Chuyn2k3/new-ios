@@ -50,20 +50,21 @@ class _IntroScreenState extends State<IntroScreen> {
                 prefixIcon: Icon(Icons.public),
               ),
             )),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 40),
-        child:ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, LoginScreen.routeName);
-          },
-          child: const Text('Bắt Đầu',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-        ))
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, LoginScreen.routeName);
+              },
+              child: const Text('Bắt Đầu',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+            ))
       ],
     )));
   }

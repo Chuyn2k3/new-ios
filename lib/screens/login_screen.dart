@@ -1,5 +1,5 @@
-import 'package:appdemo/services/api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:appdemo/screens/Myhome_screen.dart';
 
@@ -11,84 +11,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final api = DemoAPI();
   final _formfield = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passController = TextEditingController();
   bool radioValue = false;
   bool passToggle = true;
-  // void signUserIn() async {
-  //   // show loading circle
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return const Center(
-  //         child: CircularProgressIndicator(),
-  //       );
-  //     },
-  //   );
-
-  //   // try sign in
-  //   try {
-  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: emailController.text,
-  //       password: passController.text,
-  //     );
-  //     await DemoAPI().diologin();
-  //     // pop the loading circle
-  //     Navigator.pop(context);
-  //   } on FirebaseAuthException catch (e) {
-  //     // pop the loading circle
-  //     Navigator.pop(context);
-  //     // WRONG EMAIL
-  //     if (e.code == 'user-not-found') {
-  //       // show error to user
-  //       wrongEmailMessage();
-  //     }
-
-  //     // WRONG PASSWORD
-  //     else if (e.code == 'wrong-password') {
-  //       // show error to user
-  //       wrongPasswordMessage();
-  //     }
-  //   }
-  // }
-
-  // // wrong email message popup
-  // void wrongEmailMessage() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return const AlertDialog(
-  //         backgroundColor: Colors.deepPurple,
-  //         title: Center(
-  //           child: Text(
-  //             'Incorrect Email',
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // // wrong password message popup
-  // void wrongPasswordMessage() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return const AlertDialog(
-  //         backgroundColor: Colors.deepPurple,
-  //         title: Center(
-  //           child: Text(
-  //             'Incorrect Password',
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             emailController.clear();
                             passController.clear();
                             try {
-                              await DemoAPI().diologin();
+                              //fetchData();
                               Navigator.pushNamedAndRemoveUntil(context,
                                   MyhomeScreen.routeName, (route) => false);
                             } catch (e) {

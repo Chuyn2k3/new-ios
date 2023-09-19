@@ -16,14 +16,12 @@ class _NotificationScreen extends State<NotificationScreen> {
         elevation: 0,
         title: const Text(
           'Thông Báo',
-          ),
         ),
-      
+      ),
       backgroundColor: Colors.blue,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        //margin: EdgeInsets.only(top: 100),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),

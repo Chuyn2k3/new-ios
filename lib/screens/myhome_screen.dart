@@ -1,5 +1,5 @@
 import 'package:appdemo/screens/home_screen.dart';
-import 'package:appdemo/screens/info_screen.dart';
+import 'package:appdemo/user/info_screen.dart';
 import 'package:appdemo/screens/qr_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +11,14 @@ class MyhomeScreen extends StatefulWidget {
 }
 
 class _MyhomeScreenState extends State<MyhomeScreen> {
-  List page = [HomeScreen(), QRScreen(), InfoScreen()];
+  List page = [const HomeScreen(), const QRScreen(), const InfoScreen()];
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _currentIndex,
-      children: const [HomeScreen(),QRScreen(),InfoScreen()]),
+      body: IndexedStack(
+          index: _currentIndex,
+          children: const [HomeScreen(), QRScreen(), InfoScreen()]),
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
         currentIndex: _currentIndex,

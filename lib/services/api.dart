@@ -1,13 +1,13 @@
-import 'dart:convert';
-import 'dart:math';
+
+
 import 'package:appdemo/employees/employee_model.dart';
-import 'package:appdemo/services/data_model.dart';
-import 'package:appdemo/services/department_model.dart';
+import 'package:appdemo/devices/device_model.dart';
+import 'package:appdemo/departments/department_model.dart';
 import 'package:appdemo/user/user_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-//import 'package:appdemo/interceptors/dio_interceptor.dart';
 import 'package:appdemo/services/store.dart';
+
+
 
 class DemoAPI {
   late final Dio _dio;
@@ -27,26 +27,22 @@ class DemoAPI {
   }
 
   Future<UserModel?> diologin() async {
-    final response = await _dio
-        .post(
-      _loginUrl,
-      data: _loginData,
-    )
-        .catchError((error) {
-      print(error);
-    });
     try {
+      final response = await _dio.post(
+        _loginUrl,
+        data: _loginData,
+      );
       await _saveToken(response.data);
-      return UserModel.fromJson(response.data);
+      return UserModel.fromJson((response.data));
     } catch (e) {
+      // ignore_for_file: avoid_print
       print(e);
     }
-  
+    return null;
   }
 
-  Future<GetDataModel?> dioGetData() async {
+  Future<DeviceModel?> dioGetDeviceData() async {
     try {
-      
       _dio.options.headers['Authorization'] = 'Bearer ${Store.getToken()}';
       final response = await _dio.get(
         _dataUrl,
@@ -59,7 +55,7 @@ class DemoAPI {
         ),
       );
       try {
-        return GetDataModel.fromJson(response.data);
+        return DeviceModel.fromJson(response.data);
       } catch (e) {
         print('Lỗi khi lấy dữ liệu. Mã trạng thái: ${response.statusCode}');
         return null;
@@ -71,7 +67,8 @@ class DemoAPI {
 
   Future<DepartmentModel?> dioGetDepartmentData() async {
     try {
-      _dio.options.headers['Authorization'] = 'Bearer ${await Store.getToken()}';
+      _dio.options.headers['Authorization'] =
+          'Bearer ${await Store.getToken()}';
       final response = await _dio.get(
         _departmentUrl,
         options: Options(

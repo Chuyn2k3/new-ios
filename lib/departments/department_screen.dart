@@ -1,9 +1,8 @@
+import 'package:appdemo/departments/devices_for_department.dart';
 import 'package:appdemo/departments/get_department_list.dart';
 import 'package:appdemo/services/api.dart';
-import 'package:appdemo/services/department_model.dart';
+import 'package:appdemo/departments/department_model.dart';
 import 'package:flutter/material.dart';
-//import 'package:appdemo/models/model.dart';
-//import 'package:appdemo/models/detail_screen.dart';
 
 class DepartmentScreen extends StatefulWidget {
   const DepartmentScreen({super.key});
@@ -13,10 +12,10 @@ class DepartmentScreen extends StatefulWidget {
 }
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
+
   Future<List<DepartmentData>?> DataList() async {
     final List<DepartmentData>? dataList = await getDataDepartmentFromApi();
-
     // Lọc danh sách dựa trên điều kiện
     return dataList;
   }
@@ -27,6 +26,48 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   }
 
   bool isLoading = false;
+
+  void searchDepartment(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+    final List<DepartmentData>? result = await getDataDepartmentFromApi();
+    final suggestions = result!.where((element) {
+      final departmentTitle = element.title.toLowerCase();
+      final input = query.toLowerCase();
+      return departmentTitle.contains(input);
+    }).toList();
+    setState(() {
+      _department = suggestions;
+      isLoading = false;
+    });
+  }
+
+  Future<void> _retryDataLoad() async {
+    try {
+      searchDepartment(_textEditingController.text.toString());
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Lỗi'),
+            content: Text('Đã xảy ra lỗi khi tải dữ liệu: $error'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Đóng hộp thoại lỗi
+                },
+                child: const Text('Đóng'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     fetchDepartmentData();
@@ -134,69 +175,68 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 ],
               ),
               isLoading
-                  ? Container(child: CircularProgressIndicator())
+                  ? const CircularProgressIndicator()
                   : Flexible(
                       child: FutureBuilder<DepartmentModel?>(
                           future: DemoAPI().dioGetDepartmentData(),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              return ListView.builder(
-                                  //shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: _department.length,
-                                  itemBuilder: (context, index) {
-                                    if (_department.length != 0) {
-                                      return Container(
-                                          child: Container(
-                                        margin: const EdgeInsets.all(20),
-                                        //padding: EdgeInsets.only(right: 30, left: 30),
-                                        height: 235,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 241, 239, 239),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Expanded(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height: 40,
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.blue,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  20),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  20)),
+                              if (_department.isNotEmpty) {
+                                return ListView.builder(
+                                    //shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: _department.length,
+                                    itemBuilder: (context, index) {
+                                      if (_department.isNotEmpty) {
+                                        return Container(
+                                          margin: const EdgeInsets.all(20),
+                                          //padding: EdgeInsets.only(right: 30, left: 30),
+                                          height: 235,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 241, 239, 239),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Expanded(
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: 40,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topLeft: Radius
+                                                                .circular(20),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    20)),
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    _department[index].title,
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ),
                                                 ),
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  _department[index].title,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () {},
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 5,
-                                                            left: 15,
-                                                            right: 5),
-                                                    child: Stack(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      children: [
-                                                        Container(
-                                                          child: Row(
+                                                GestureDetector(
+                                                    onTap: () {},
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              top: 10,
+                                                              bottom: 5,
+                                                              left: 15,
+                                                              right: 5),
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Row(
                                                             children: [
                                                               const SizedBox(
                                                                 width: 7,
@@ -223,38 +263,38 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                                               ),
                                                             ],
                                                           ),
-                                                        ),
-                                                        const Positioned(
-                                                            right: 5,
-                                                            child: Icon(Icons
-                                                                .keyboard_arrow_right))
-                                                      ],
-                                                    ),
-                                                  )),
-                                              Divider(
-                                                //Divider tạo dòng kẻ ngang
-                                                color: Colors.blue[
-                                                    700], // Màu của dòng kẻ
-                                                thickness:
-                                                    1.4, // Độ dày của dòng kẻ
-                                                indent:
-                                                    10, // Khoảng cách từ lề trái
-                                                endIndent:
-                                                    10, // Khoảng cách từ lề phải
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {},
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 5,
-                                                      bottom: 5,
-                                                      left: 15,
-                                                      right: 5),
-                                                  child: Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        child: Row(
+                                                          const Positioned(
+                                                              right: 5,
+                                                              child: Icon(Icons
+                                                                  .keyboard_arrow_right))
+                                                        ],
+                                                      ),
+                                                    )),
+                                                Divider(
+                                                  //Divider tạo dòng kẻ ngang
+                                                  color: Colors.blue[
+                                                      700], // Màu của dòng kẻ
+                                                  thickness:
+                                                      1.4, // Độ dày của dòng kẻ
+                                                  indent:
+                                                      10, // Khoảng cách từ lề trái
+                                                  endIndent:
+                                                      10, // Khoảng cách từ lề phải
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {},
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 5,
+                                                            bottom: 5,
+                                                            left: 15,
+                                                            right: 5),
+                                                    child: Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Row(
                                                           children: [
                                                             const SizedBox(
                                                               width: 7,
@@ -279,39 +319,39 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                      const Positioned(
-                                                          right: 5,
-                                                          child: Icon(Icons
-                                                              .keyboard_arrow_right))
-                                                    ],
+                                                        const Positioned(
+                                                            right: 5,
+                                                            child: Icon(Icons
+                                                                .keyboard_arrow_right))
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Divider(
-                                                //Divider tạo dòng kẻ ngang
-                                                color: Colors.blue[
-                                                    700], // Màu của dòng kẻ
-                                                thickness:
-                                                    1.4, // Độ dày của dòng kẻ
-                                                indent:
-                                                    10, // Khoảng cách từ lề trái
-                                                endIndent:
-                                                    10, // Khoảng cách từ lề phải
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {},
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 5,
-                                                      bottom: 5,
-                                                      left: 15,
-                                                      right: 5),
-                                                  child: Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        child: Row(
+                                                Divider(
+                                                  //Divider tạo dòng kẻ ngang
+                                                  color: Colors.blue[
+                                                      700], // Màu của dòng kẻ
+                                                  thickness:
+                                                      1.4, // Độ dày của dòng kẻ
+                                                  indent:
+                                                      10, // Khoảng cách từ lề trái
+                                                  endIndent:
+                                                      10, // Khoảng cách từ lề phải
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {},
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 5,
+                                                            bottom: 5,
+                                                            left: 15,
+                                                            right: 5),
+                                                    child: Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Row(
                                                           children: [
                                                             const SizedBox(
                                                               width: 7,
@@ -336,39 +376,48 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                      const Positioned(
-                                                          right: 5,
-                                                          child: Icon(Icons
-                                                              .keyboard_arrow_right))
-                                                    ],
+                                                        const Positioned(
+                                                            right: 5,
+                                                            child: Icon(Icons
+                                                                .keyboard_arrow_right))
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Divider(
-                                                //Divider tạo dòng kẻ ngang
-                                                color: Colors.blue[
-                                                    700], // Màu của dòng kẻ
-                                                thickness:
-                                                    1.4, // Độ dày của dòng kẻ
-                                                indent:
-                                                    10, // Khoảng cách từ lề trái
-                                                endIndent:
-                                                    10, // Khoảng cách từ lề phải
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {},
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 5,
-                                                      bottom: 5,
-                                                      left: 15,
-                                                      right: 5),
-                                                  child: Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        child: const Row(
+                                                Divider(
+                                                  //Divider tạo dòng kẻ ngang
+                                                  color: Colors.blue[
+                                                      700], // Màu của dòng kẻ
+                                                  thickness:
+                                                      1.4, // Độ dày của dòng kẻ
+                                                  indent:
+                                                      10, // Khoảng cách từ lề trái
+                                                  endIndent:
+                                                      10, // Khoảng cách từ lề phải
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DeviceInDepartmentScreen(
+                                                                    getDepartmentData:
+                                                                        _department[
+                                                                            index])));
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 5,
+                                                            bottom: 5,
+                                                            left: 15,
+                                                            right: 5),
+                                                    child: const Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Row(
                                                           children: [
                                                             SizedBox(
                                                               width: 7,
@@ -391,44 +440,41 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                      const Positioned(
-                                                          right: 5,
-                                                          child: Icon(Icons
-                                                              .keyboard_arrow_right))
-                                                    ],
+                                                        Positioned(
+                                                            right: 5,
+                                                            child: Icon(Icons
+                                                                .keyboard_arrow_right))
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              )
-                                            ],
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ));
-                                    } else
-                                      return Container(
-                                        child: Text('Không có khoa phòng này'),
-                                      );
-                                  });
-                            } else
-                              return Container(
-                                  child: CircularProgressIndicator());
+                                        );
+                                      } else {
+                                        return const Text(
+                                            'Không có khoa phòng này');
+                                      }
+                                    });
+                              } else {
+                                return Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: _retryDataLoad,
+                                      child: const Text('Tải lại'),
+                                    ),
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    const Text('Không có thiết bị cần tìm')
+                                  ],
+                                );
+                              }
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
                           }))
             ])));
-  }
-
-  void searchDepartment(String query) async {
-    setState(() {
-      isLoading = true;
-    });
-    final List<DepartmentData>? result = await getDataDepartmentFromApi();
-    final suggestions = result!.where((element) {
-      final departmentTitle = element.title.toLowerCase();
-      final input = query.toLowerCase();
-      return departmentTitle.contains(input);
-    }).toList();
-    setState(() {
-      _department = suggestions;
-      isLoading = false;
-    });
   }
 }

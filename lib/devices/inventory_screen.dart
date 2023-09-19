@@ -1,17 +1,15 @@
-import 'package:appdemo/services/data_model.dart';
+import 'package:appdemo/devices/device_model.dart';
 import 'package:flutter/material.dart';
-
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen(this.models, {super.key});
-  final Data models;
+  final DeviceData models;
   static String routeName = 'inventory_screen';
   @override
   State<InventoryScreen> createState() => _InventoryScreenState();
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
-  //final bool check = (this.widget.models.titile == 'Đang báo hỏng');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +54,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         widget.models.title,
                         textAlign: TextAlign.justify,
@@ -72,7 +70,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color:Colors.red),
+                          color: Colors.red),
                       child: Text(widget.models.status,
                           style: const TextStyle(
                               color: Colors.white,
@@ -109,12 +107,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.model,
+                                  Text(
+                                      (widget.models.model != null)
+                                          ? widget.models.model!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.serial,
+                                  Text(
+                                      (widget.models.serial != null)
+                                          ? widget.models.serial!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -152,12 +156,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.yearManufacture,
+                                  Text(
+                                      (widget.models.yearManufacture != null)
+                                          ? widget.models.yearManufacture!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.yearUse,
+                                  Text(
+                                      (widget.models.yearUse != null)
+                                          ? widget.models.yearUse!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -195,12 +205,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(widget.models.manufacturer,
+                                  Text(
+                                      (widget.models.manufacturer != null)
+                                          ? widget.models.manufacturer!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black)),
-                                  Text(widget.models.origin,
+                                  Text(
+                                      (widget.models.origin != null)
+                                          ? widget.models.origin!
+                                          : "Không có dữ liệu",
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -235,8 +251,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   ),
                 ),
                 GestureDetector(
-                    onTap: () {
-                    },
+                    onTap: () {},
                     child: Container(
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,

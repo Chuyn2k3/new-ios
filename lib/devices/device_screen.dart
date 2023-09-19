@@ -1,14 +1,12 @@
-//import 'dart:js_util';
-
+import 'package:appdemo/departments/get_department_list.dart';
 import 'package:appdemo/services/api.dart';
-import 'package:appdemo/services/data_model.dart';
-import 'package:appdemo/services/get_data_list.dart';
-import 'package:appdemo/services/get_idDepartment.dart';
-import 'package:appdemo/services/store.dart';
-import 'package:appdemo/statusDevices.dart';
+import 'package:appdemo/devices/device_model.dart';
+import 'package:appdemo/departments/department_model.dart';
+import 'package:appdemo/devices/get_device_list.dart';
+import 'package:appdemo/devices/statusDevices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:appdemo/models/detail_screen.dart';
+import 'package:appdemo/devices/detail_screen.dart';
 
 class DeviceScreen extends StatefulWidget {
   const DeviceScreen({super.key});
@@ -21,45 +19,60 @@ class _DeviceScreenState extends State<DeviceScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   bool isLoading = false;
   String _selectedState = all;
-  String? _selectedDepartment;
-  Future<List<Data>?> DataList() async {
-    final List<Data>? dataList = await getDataFromApi();
+  String _selectedDepartment = all;
+  String? StateChoose;
+  String? DepartmentChoose;
+
+  Future<List<DeviceData>?> DataList() async {
+    final List<DeviceData>? dataList = await getDataFromApi();
     return dataList;
   }
 
-  List<Data> _devices = [];
+  List<DeviceData> _devices = [];
+  List<DeviceData> _defaultDevice = [];
   void fetchData() async {
     _devices = (await DataList())!;
+    _defaultDevice = _devices;
   }
 
+  Future<List<DepartmentData>?> DataListDepartment() async {
+    final List<DepartmentData>? dataList = await getDataDepartmentFromApi();
+    // Lọc danh sách dựa trên điều kiện
+    return dataList;
+  }
+
+  List<DepartmentData> _department = [];
+
+  void fetchDepartmentData() async {
+    _department = (await DataListDepartment())!;
+    listDepartment = _department.map((e) => e.title).toList();
+    listDepartment.insert(0, all);
+  }
+
+  List<String> listDepartment = [];
   @override
   void initState() {
     super.initState();
     fetchData();
+    fetchDepartmentData();
   }
 
   Future<void> _retryDataLoad() async {
-    setState(() {}); // Đặt trạng thái lại để hiển thị tiêng chờ
     try {
-      // Gọi lại hàm fetchData để tải lại dữ liệu
-      // Xử lý dữ liệu sau khi tải lại thành công
-      setState(() {
-        fetchData();
-      });
+      reApplySelection();
     } catch (error) {
-      // Xử lý lỗi khi tải lại không thành công (hiển thị thông báo lỗi chẳng hạn)
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Lỗi'),
+            title: const Text('Lỗi'),
             content: Text('Đã xảy ra lỗi khi tải dữ liệu: $error'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Đóng hộp thoại lỗi
                 },
-                child: Text('Đóng'),
+                child: const Text('Đóng'),
               ),
             ],
           );
@@ -177,7 +190,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                               height: 40,
                               margin: const EdgeInsets.all(13),
                               width: 150,
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 232, 230, 230),
                                   borderRadius: BorderRadius.only(
@@ -198,14 +211,14 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '$_selectedState',
-                                            style: TextStyle(
+                                            _selectedState,
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_drop_down,
                                           color:
                                               Color.fromARGB(255, 93, 92, 92),
@@ -220,7 +233,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                         return CupertinoPopupSurface(
                                           isSurfacePainted: false,
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.only(
                                                     topLeft:
@@ -231,7 +244,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                 500, // Điều chỉnh chiều cao của bottom sheet
                                             child: Column(
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Expanded(
@@ -245,6 +258,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                       setState(() {
                                                         _selectedState =
                                                             listStatus[index];
+
                                                         //searchOnStatusDevice();
                                                       });
                                                     },
@@ -258,11 +272,12 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
+                                                              const EdgeInsets
+                                                                  .all(8.0),
                                                           child: Text(
                                                             listStatus[index],
-                                                            style: TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 18.0,
                                                               color: Colors
                                                                   .black, // Màu văn bản
@@ -275,9 +290,9 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                 ),
                                                 Expanded(
                                                   child: CupertinoButton(
-                                                      child: Text('Xác Nhận'),
-                                                      onPressed:
-                                                          applySelection),
+                                                      onPressed: applySelection,
+                                                      child: const Text(
+                                                          'Xác Nhận')),
                                                 )
                                               ],
                                             ),
@@ -309,7 +324,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                               height: 40,
                               margin: const EdgeInsets.all(13),
                               width: 150,
-                              padding: EdgeInsets.only(top: 1),
+                              padding: const EdgeInsets.only(top: 1),
                               decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 232, 230, 230),
                                   borderRadius: BorderRadius.only(
@@ -330,14 +345,14 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '$_selectedDepartment',
-                                            style: TextStyle(
+                                            _selectedDepartment,
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_drop_down,
                                           color:
                                               Color.fromARGB(255, 93, 92, 92),
@@ -352,7 +367,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                         return CupertinoPopupSurface(
                                           isSurfacePainted: false,
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.only(
                                                     topLeft:
@@ -363,7 +378,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                 500, // Điều chỉnh chiều cao của bottom sheet
                                             child: Column(
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Expanded(
@@ -375,12 +390,12 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                         (int index) {
                                                       // Xử lý khi phần tử được chọn thay đổi
                                                       setState(() {
-                                                        _selectedState =
-                                                            listStatus[index];
-                                                        //searchOnStatusDevice();
+                                                        _selectedDepartment =
+                                                            listDepartment[
+                                                                index];
                                                       });
                                                     },
-                                                    childCount: listStatus
+                                                    childCount: listDepartment
                                                         .length, // Số lượng phần tử
                                                     itemBuilder:
                                                         (BuildContext context,
@@ -390,11 +405,13 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
+                                                              const EdgeInsets
+                                                                  .all(8.0),
                                                           child: Text(
-                                                            listStatus[index],
-                                                            style: TextStyle(
+                                                            listDepartment[
+                                                                index],
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 18.0,
                                                               color: Colors
                                                                   .black, // Màu văn bản
@@ -407,9 +424,9 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                 ),
                                                 Expanded(
                                                   child: CupertinoButton(
-                                                      child: Text('Xác Nhận'),
-                                                      onPressed:
-                                                          applySelection),
+                                                      onPressed: applySelection,
+                                                      child: const Text(
+                                                          'Xác Nhận')),
                                                 )
                                               ],
                                             ),
@@ -438,10 +455,10 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 ],
               ),
               isLoading
-                  ? Container(child: CircularProgressIndicator())
+                  ? const CircularProgressIndicator()
                   : Flexible(
-                      child: FutureBuilder<GetDataModel?>(
-                          future: DemoAPI().dioGetData(),
+                      child: FutureBuilder<DeviceModel?>(
+                          future: DemoAPI().dioGetDeviceData(),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               if (_devices.isNotEmpty) {
@@ -449,7 +466,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                     scrollDirection: Axis.vertical,
                                     itemCount: _devices.length,
                                     itemBuilder: (context, index) {
-                                      if (_devices.length != 0) {
+                                      if (_devices.isNotEmpty) {
                                         return GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -457,8 +474,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           DetailsScreen(
-                                                              _devices![index]
-                                                                  as Data)));
+                                                              _devices[
+                                                                  index])));
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.all(20),
@@ -492,7 +509,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                            _devices![index]
+                                                            _devices[index]
                                                                 .title,
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -503,7 +520,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                                         .w500),
                                                           ),
                                                           Text(
-                                                            'Model: ${_devices![index].model}',
+                                                            'Model: ${_devices[index].model}',
                                                             style: const TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -511,7 +528,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                                         .w400),
                                                           ),
                                                           Text(
-                                                            'Serial: ${_devices![index].serial}',
+                                                            'Serial: ${_devices[index].serial}',
                                                             style: const TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -532,21 +549,28 @@ class _DeviceScreenState extends State<DeviceScreen> {
                                                 ),
                                               ),
                                             ));
-                                      } else
-                                        return Container(
-                                          child: Text('Không có thiết bị nào'),
-                                        );
+                                      } else {
+                                        return const Text(
+                                            'Không có thiết bị nào');
+                                      }
                                     });
-                              } else
-                                return Container(
-                                  child: ElevatedButton(
-                                    onPressed: _retryDataLoad,
-                                    child: Text('Tải lại'),
-                                  ),
+                              } else {
+                                return Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: _retryDataLoad,
+                                      child: const Text('Tải lại'),
+                                    ),
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    const Text('Không có thiết bị cần tìm')
+                                  ],
                                 );
-                            } else
-                              return Container(
-                                  child: CircularProgressIndicator());
+                              }
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
                           }))
             ])));
   }
@@ -555,8 +579,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
     setState(() {
       isLoading = true;
     });
-    final List<Data>? result = await getDataFromApi();
-    final suggestions = result!.where((element) {
+    final suggestions = _defaultDevice.where((element) {
       final deviceTitle = element.title.toLowerCase();
       final input = query.toLowerCase();
       return deviceTitle.contains(input);
@@ -571,39 +594,74 @@ class _DeviceScreenState extends State<DeviceScreen> {
     setState(() {
       isLoading = true;
     });
-    final List<Data>? result = await getDataFromApi();
-    final suggestions = result!.where((element) {
+    final suggestions = _defaultDevice.where((element) {
       final deviceStatus = element.status.toLowerCase();
-      final input = _selectedState!.toLowerCase();
+      final input = _selectedState.toLowerCase();
       return deviceStatus.contains(input);
     }).toList();
     setState(() {
       _devices = suggestions;
       isLoading = false;
     });
-  }
-
-  void applySelection() {
-    Navigator.of(context).pop();
-    if (_selectedState == '$all') {
-      searchDevice("");
-    } else
-      searchOnStatusDevice();
   }
 
   void searchOnDepartmentDevice() async {
     setState(() {
       isLoading = true;
     });
-    final List<Data>? result = await getDataFromApi();
-    final suggestions = result!.where((element) {
-      final deviceStatus = element.status.toLowerCase();
-      final input = _selectedState!.toLowerCase();
-      return deviceStatus.contains(input);
-    }).toList();
+    final List<DeviceData> suggestions = _defaultDevice
+        .where((data) => _department.any((department) =>
+            ((department.id == data.departmentId) &&
+                (_selectedDepartment == department.title))))
+        .toList();
     setState(() {
       _devices = suggestions;
       isLoading = false;
     });
+  }
+
+  void searchOnDepartmentAndStatusDevice() async {
+    setState(() {
+      isLoading = true;
+    });
+    final suggestions = _defaultDevice.where((element) {
+      final deviceStatus = element.status.toLowerCase();
+      final input = _selectedState.toLowerCase();
+      return deviceStatus.contains(input);
+    }).toList();
+    final secondSuggestions = suggestions
+        .where((data) => _department.any((department) =>
+            ((department.id == data.departmentId) &&
+                (_selectedDepartment == department.title))))
+        .toList();
+    setState(() {
+      _devices = secondSuggestions;
+      isLoading = false;
+    });
+  }
+
+  void applySelection() {
+    Navigator.of(context).pop();
+    if ((_selectedState == all) && (_selectedDepartment == all)) {
+      searchDevice("");
+    } else if ((_selectedState != all) && (_selectedDepartment == all)) {
+      searchOnStatusDevice();
+    } else if ((_selectedDepartment != all) && (_selectedState == all)) {
+      searchOnDepartmentDevice();
+    } else {
+      searchOnDepartmentAndStatusDevice();
+    }
+  }
+
+  void reApplySelection() {
+    if ((_selectedState == all) && (_selectedDepartment == all)) {
+      searchDevice("");
+    } else if ((_selectedState != all) && (_selectedDepartment == all)) {
+      searchOnStatusDevice();
+    } else if ((_selectedDepartment != all) && (_selectedState == all)) {
+      searchOnDepartmentDevice();
+    } else {
+      searchOnDepartmentAndStatusDevice();
+    }
   }
 }

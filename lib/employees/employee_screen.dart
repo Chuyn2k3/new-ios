@@ -1,7 +1,6 @@
 import 'package:appdemo/employees/employee_model.dart';
 import 'package:appdemo/employees/get_employee_list.dart';
 import 'package:appdemo/services/api.dart';
-import 'package:appdemo/services/department_model.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeScreen extends StatefulWidget {
@@ -26,6 +25,48 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   }
 
   bool isLoading = false;
+
+  void searchEmployee(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+    final List<EmployeeData>? result = await getDataEmployeeFromApi();
+    final suggestions = result!.where((element) {
+      final employeeTitle = element.displayname.toLowerCase();
+      final input = query.toLowerCase();
+      return employeeTitle.contains(input);
+    }).toList();
+    setState(() {
+      _employee = suggestions;
+      isLoading = false;
+    });
+  }
+
+  Future<void> _retryDataLoad() async {
+    try {
+      searchEmployee(_textEditingController.text.toString());
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Lỗi'),
+            content: Text('Đã xảy ra lỗi khi tải dữ liệu: $error'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Đóng hộp thoại lỗi
+                },
+                child: const Text('Đóng'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     fetchEmployeeData();
@@ -132,132 +173,146 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       ))
                 ],
               ),
-              isLoading? Container(child: CircularProgressIndicator(),)
-              :Flexible(
-                  child: FutureBuilder<EmployeeModel?>(
-                      future: DemoAPI().dioGetEmployeeData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                              //shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: _employee.length,
-                              itemBuilder: (context, index) {
-                                if (_employee.length != 0) {
-                                  return GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        margin: const EdgeInsets.all(20),
-                                        padding: const EdgeInsets.only(
-                                            right: 30, left: 30),
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 241, 239, 239),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Row(
-                                          children: [
-                                            const CircleAvatar(
-                                              backgroundImage: AssetImage(
-                                                  'assets/images/logo-bo-y-te.jpg'),
-                                              radius: 30,
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : Flexible(
+                      child: FutureBuilder<EmployeeModel?>(
+                          future: DemoAPI().dioGetEmployeeData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (_employee.isNotEmpty) {
+                                return ListView.builder(
+                                    //shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: _employee.length,
+                                    itemBuilder: (context, index) {
+                                      if (_employee.isNotEmpty) {
+                                        return GestureDetector(
+                                            onTap: () {},
+                                            child: Container(
+                                              margin: const EdgeInsets.all(20),
+                                              padding: const EdgeInsets.only(
+                                                  right: 30, left: 30),
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 241, 239, 239),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Row(
                                                 children: [
-                                                  Text(
-                                                    _employee[index].displayname,
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                                                  const CircleAvatar(
+                                                    backgroundImage: AssetImage(
+                                                        'assets/images/logo-bo-y-te.jpg'),
+                                                    radius: 30,
                                                   ),
                                                   const SizedBox(
-                                                    height: 10,
+                                                    width: 20,
                                                   ),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                          Icons.email_outlined,
-                                                          size: 17),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {},
-                                                        child: Text(
-                                                          _employee[index].email,
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          _employee[index]
+                                                              .displayname,
                                                           style: const TextStyle(
-                                                              fontSize: 12,
+                                                              fontSize: 15,
+                                                              color:
+                                                                  Colors.black,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons
-                                                            .phone_android_outlined,
-                                                        size: 17,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {},
-                                                        child: Text(
-                                                          _employee[index].phone,
-                                                          style: const TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                        const SizedBox(
+                                                          height: 10,
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                        Row(
+                                                          children: [
+                                                            const Icon(
+                                                                Icons
+                                                                    .email_outlined,
+                                                                size: 17),
+                                                            const SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: () {},
+                                                              child: Text(
+                                                                _employee[index]
+                                                                    .email,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons
+                                                                  .phone_android_outlined,
+                                                              size: 17,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: () {},
+                                                              child: Text(
+                                                                _employee[index]
+                                                                    .phone,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ));
-                                } else
-                                  return Container(
-                                      child: Text('Không tìm thấy nhân viên'));
-                              });
-                        } else
-                          return Container(child: CircularProgressIndicator());
-                      }))
+                                            ));
+                                      } else {
+                                        return const Text(
+                                            'Không tìm thấy nhân viên');
+                                      }
+                                    });
+                              } else {
+                                return Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: _retryDataLoad,
+                                      child: const Text('Tải lại'),
+                                    ),
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    const Text('Không có thiết bị cần tìm')
+                                  ],
+                                );
+                              }
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          }))
             ])));
-  }
-
-  void searchEmployee(String query) async {
-    setState(() {
-      isLoading = true;
-    });
-    final List<EmployeeData>? result = await getDataEmployeeFromApi();
-    final suggestions = result!.where((element) {
-      final employeeTitle = element.displayname!.toLowerCase();
-      final input = query.toLowerCase();
-      return employeeTitle.contains(input);
-    }).toList();
-    setState(() {
-      _employee = suggestions;
-      isLoading = false;
-    });
   }
 }

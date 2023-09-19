@@ -18,7 +18,6 @@ class _InfoScreenState extends State<InfoScreen> {
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
-          //automaticallyImplyLeading: false,
           elevation: 0,
           title: const Text('Cá nhân'),
           centerTitle: true,
@@ -62,28 +61,27 @@ class _InfoScreenState extends State<InfoScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                             Text(
-                              snapshot.data!.data!.displayname,
-                              style: TextStyle(
+                            Text(
+                              snapshot.data!.data!.displayname!,
+                              style: const TextStyle(
                                   fontSize: 27,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             Divider(
-                              //Divider tạo dòng kẻ ngang
-                              color: Colors.blue[700], // Màu của dòng kẻ
-                              thickness: 1.4, // Độ dày của dòng kẻ
-                              indent: 20, // Khoảng cách từ lề trái
-                              endIndent: 20, // Khoảng cách từ lề phải
+                              color: Colors.blue[700],
+                              thickness: 1.4,
+                              indent: 20,
+                              endIndent: 20,
                             ),
                             Container(
                                 margin: const EdgeInsets.only(
                                     top: 10, right: 30, left: 30, bottom: 10),
-                                child:  Row(
+                                child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
+                                    const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -93,7 +91,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
                                           Text('Khoa/Phòng:',
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -104,12 +104,14 @@ class _InfoScreenState extends State<InfoScreen> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(snapshot.data!.data!.phone,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.black)),
-                                          SizedBox(height: 10,),        
-                                          Text('Không có dữ liệu',
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          const Text('Không có dữ liệu',
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
@@ -118,11 +120,10 @@ class _InfoScreenState extends State<InfoScreen> {
                                   ],
                                 )),
                             Divider(
-                              //Divider tạo dòng kẻ ngang
-                              color: Colors.blue[700], // Màu của dòng kẻ
-                              thickness: 1.4, // Độ dày của dòng kẻ
-                              indent: 20, // Khoảng cách từ lề trái
-                              endIndent: 20, // Khoảng cách từ lề phải
+                              color: Colors.blue[700],
+                              thickness: 1.4,
+                              indent: 20,
+                              endIndent: 20,
                             ),
                             Container(
                                 margin: const EdgeInsets.only(
@@ -131,7 +132,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
+                                    const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -141,7 +142,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
                                           Text('Giới tính:',
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -151,14 +154,16 @@ class _InfoScreenState extends State<InfoScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text('Administrator',
+                                          const Text('Administrator',
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.black)),
-                                          SizedBox(height: 10,),        
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                           Text(snapshot.data!.data!.gender,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.black))
@@ -166,11 +171,10 @@ class _InfoScreenState extends State<InfoScreen> {
                                   ],
                                 )),
                             Divider(
-                              //Divider tạo dòng kẻ ngang
-                              color: Colors.blue[700], // Màu của dòng kẻ
-                              thickness: 1.4, // Độ dày của dòng kẻ
-                              indent: 20, // Khoảng cách từ lề trái
-                              endIndent: 20, // Khoảng cách từ lề phải
+                              color: Colors.blue[700],
+                              thickness: 1.4,
+                              indent: 20,
+                              endIndent: 20,
                             ),
                             Container(
                                 margin: const EdgeInsets.only(
@@ -179,7 +183,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
+                                    const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -189,7 +193,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
                                           Text('Địa chỉ:',
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -200,13 +206,20 @@ class _InfoScreenState extends State<InfoScreen> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(snapshot.data!.data!.email,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.black)),
-                                          SizedBox(height: 10,),       
-                                          Text((snapshot.data!.data!.address==null)?'Không có dữ liệu':snapshot.data!.data!.address,
-                                              style: TextStyle(
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                              (snapshot.data!.data!.address ==
+                                                      null)
+                                                  ? 'Không có dữ liệu'
+                                                  : snapshot
+                                                      .data!.data!.address,
+                                              style: const TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.black))
@@ -264,19 +277,17 @@ class _InfoScreenState extends State<InfoScreen> {
                                     )),
                               ),
                               Divider(
-                                //Divider tạo dòng kẻ ngang
-                                color: Colors.blue[700], // Màu của dòng kẻ
-                                thickness: 1.4, // Độ dày của dòng kẻ
-                                indent: 20, // Khoảng cách từ lề trái
-                                endIndent: 20, // Khoảng cách từ lề phải
+                                color: Colors.blue[700],
+                                thickness: 1.4,
+                                indent: 20,
+                                endIndent: 20,
                               ),
                               GestureDetector(
                                   onTap: () {
-                                    Navigator.pushAndRemoveUntil(
-                                              context,
-                                     MaterialPageRoute(builder: (context) => LoginScreen()),
-                                     (route) => false,
-                );
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        LoginScreen.routeName,
+                                        (route) => false);
                                   },
                                   child: Container(
                                       height: 40,
@@ -319,8 +330,9 @@ class _InfoScreenState extends State<InfoScreen> {
                             ]))
                       ])
                     ]);
-                  } else
-                    return Container(child: Text('error'));
+                  } else {
+                    return const Text('error');
+                  }
                 })));
   }
 }

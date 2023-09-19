@@ -21,6 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
       });
     }
   }
+
   void toggleSwitchKey(bool value) {
     if (isSwitchedKey == false) {
       setState(() {
@@ -32,6 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +53,8 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             children: [
               Container(
-                margin:
-                    const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
+                margin: const EdgeInsets.only(
+                    top: 10, right: 10, left: 10, bottom: 10),
                 height: 190,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -61,7 +63,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   Container(
                       height: 70,
                       width: double.infinity,
-                      margin: const EdgeInsets.only(top: 5, right: 10, left: 10),
+                      margin:
+                          const EdgeInsets.only(top: 5, right: 10, left: 10),
                       alignment: Alignment.center,
                       child: Stack(
                         alignment: Alignment.center,

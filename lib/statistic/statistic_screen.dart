@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: avoid_unnecessary_containers
 
+import 'package:flutter/material.dart';
 
 class StatisticScreen extends StatefulWidget {
   const StatisticScreen({super.key});
@@ -42,23 +43,29 @@ class _StatisticScreenState extends State<StatisticScreen> {
                             ),
                             TextButton(
                                 onPressed: () {
-                                   showModalBottomSheet(
-                                    context: context,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(top: Radius.circular(20))
-                                    ),
-                                    builder: (context) => Container(
-                                      child: Container(
-                                        height: 120,                                     
-                                        padding: const EdgeInsets.all(20),
-                                        child: const Column(
-                                          children: [
-                                            Text('Khoa phòng',style: TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.bold),)
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                      );
+                                  showModalBottomSheet(
+                                      context: context,
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20))),
+                                      builder: (context) => Container(
+                                            child: Container(
+                                              height: 120,
+                                              padding: const EdgeInsets.all(20),
+                                              child: const Column(
+                                                children: [
+                                                  Text(
+                                                    'Khoa phòng',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ));
                                 },
                                 child: Container(
                                   height: 30,
@@ -76,7 +83,6 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Center(
-
                                           child: Text(
                                         'Khoa phòng',
                                         style: TextStyle(
@@ -85,8 +91,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      Icon(                                     
-                                        Icons.keyboard_arrow_down)
+                                      Icon(Icons.keyboard_arrow_down)
                                     ],
                                   ),
                                 ))

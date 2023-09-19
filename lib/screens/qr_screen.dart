@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:appdemo/screens/myhome_screen.dart';
+
 class QRScreen extends StatefulWidget {
   const QRScreen({super.key});
   static String routeName = 'qr_screen';

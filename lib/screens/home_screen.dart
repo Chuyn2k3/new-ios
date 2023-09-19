@@ -1,18 +1,14 @@
 import 'package:appdemo/departments/department_screen.dart';
-import 'package:appdemo/screens/info_screen.dart';
 import 'package:appdemo/screens/notification_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:appdemo/screens/device_screen.dart';
-import 'package:appdemo/screens/error_screen.dart';
-import 'package:appdemo/employees/employee_screen.dart';
-import 'package:appdemo/screens/statistic_screen.dart';
-import 'package:appdemo/screens/myInventory_screen.dart';
+import 'package:appdemo/services/api.dart';
+import 'package:appdemo/user/user_model.dart';
 
-class Fuction {
-  const Fuction({this.title, this.icon});
-  final String? title;
-  final IconData? icon;
-}
+import 'package:flutter/material.dart';
+import 'package:appdemo/devices/device_screen.dart';
+import 'package:appdemo/error/error_screen.dart';
+import 'package:appdemo/employees/employee_screen.dart';
+import 'package:appdemo/statistic/statistic_screen.dart';
+import 'package:appdemo/inventory/myInventory_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,328 +18,310 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Fuction> fuc = const <Fuction>[
-    Fuction(title: "Thiết Bị", icon: Icons.local_hospital),
-    Fuction(title: "Báo Hỏng", icon: Icons.notifications_active),
-    Fuction(title: "Khoa Phòng", icon: Icons.business),
-    Fuction(title: "Nhân Viên", icon: Icons.person),
-    Fuction(title: "Thống Kê", icon: Icons.bar_chart),
-    Fuction(title: "Kiểm kê", icon: Icons.inventory),
-  ];
-  final int _currentIndex = 0;
-  List page = [const HomeScreen(), const InfoScreen()];
-  DateTime pre_backpress=DateTime.now();
+  DateTime pre_backpress = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
-        final timegap=DateTime.now().difference(pre_backpress);
-        print('$timegap');
-        pre_backpress=DateTime.now();
-        final canExit=timegap>=const Duration(seconds: 2);
-        if(canExit){
-               const snack=SnackBar(content: Text('Ấn 2 lần để thoát'),duration: Duration(seconds: 2),);
-               ScaffoldMessenger.of(context).showSnackBar(snack);
-               return false;
-               //final snack=SnackBar(content: Text('Ấn 2 lần để thoát'),duration: Duration(seconds: 2),);
-        }else{
-             return true;
-        }
-        //return false;
-      },
-    child: Scaffold(
-      backgroundColor: Colors.blueAccent,
-      body: Stack(children: [
-        Column(children: [
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 14,
-                          child: Image.asset('assets/images/logo-bo-y-te.jpg'),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+        onWillPop: () async {
+          final timegap = DateTime.now().difference(pre_backpress);
+          pre_backpress = DateTime.now();
+          final canExit = timegap >= const Duration(seconds: 2);
+          if (canExit) {
+            const snack = SnackBar(
+              content: Text('Ấn 2 lần để thoát'),
+              duration: Duration(seconds: 2),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snack);
+            return false;
+          } else {
+            return true;
+          }
+        },
+        child: FutureBuilder<UserModel?>(
+            future: DemoAPI().diologin(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Scaffold(
+                  backgroundColor: Colors.blueAccent,
+                  body: Stack(children: [
+                    Column(children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Xin chào',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.white)),
-                              Icon(
-                                Icons.back_hand,
-                                size: 20,
-                                color: Colors.yellow,
-                              )
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 14,
+                                      child: Image.asset(
+                                          'assets/images/logo-bo-y-te.jpg'),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Text('Xin chào',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white)),
+                                          Icon(
+                                            Icons.back_hand,
+                                            size: 20,
+                                            color: Colors.yellow,
+                                          )
+                                        ],
+                                      ),
+                                      Text(
+                                        snapshot.data!.data!.displayname!,
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, NotificationScreen.routeName);
+                                  },
+                                  child: const Icon(
+                                    Icons.notifications,
+                                    color: Colors.yellow,
+                                    size: 45,
+                                  ))
                             ],
                           ),
-                          Text(
-                            'Pham Viet Chuyen',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, NotificationScreen.routeName);
-                      },
-                      child: const Icon(
-                        Icons.notifications,
-                        color: Colors.yellow,
-                        size: 45,
-                      ))
-                ],
-              ),
-            ),
-          )
-        ]),
-        const SizedBox(height: 50),
-        Positioned.fill(
-            top: 100,
-            //bottom: 55,
-            child: Container(
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              child: GridView(
-                padding:
-                    const EdgeInsets.only(top: 20, right: 60, left: 60, bottom: 30),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 50,
-                    crossAxisSpacing: 50),
-                children: [
-                  InkWell(
-                    highlightColor: Colors.grey, //hiệu ứng khi giữ lâu
-                    splashColor: Colors.red, //hiệu ứng khi chạm vào
-                    onTap: () {
-                      Navigator.pushNamed(context, DeviceScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.medical_services,
-                            size: 60,
-                            color: Color.fromARGB(255, 238, 52, 39),
+                        ),
+                      )
+                    ]),
+                    const SizedBox(height: 50),
+                    Positioned.fill(
+                        top: 100,
+                        child: Container(
+                          height: double.infinity,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25))),
+                          child: GridView(
+                            padding: const EdgeInsets.only(
+                                top: 20, right: 60, left: 60, bottom: 30),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 50,
+                                    crossAxisSpacing: 50),
+                            children: [
+                              InkWell(
+                                highlightColor:
+                                    Colors.grey, //hiệu ứng khi giữ lâu
+                                splashColor: Colors.red, //hiệu ứng khi chạm vào
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, DeviceScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.medical_services,
+                                        size: 60,
+                                        color: Color.fromARGB(255, 238, 52, 39),
+                                      ),
+                                      Text(
+                                        "Thiết Bị",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ErrorScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.notification_important,
+                                        size: 60,
+                                        color: Colors.orange,
+                                      ),
+                                      Text(
+                                        "Báo Hỏng",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, DepartmentScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.business,
+                                        size: 60,
+                                        color: Color.fromRGBO(110, 139, 61, 1),
+                                      ),
+                                      Text(
+                                        "Khoa Phòng",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, EmployeeScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.person,
+                                        size: 60,
+                                        color: Color.fromARGB(255, 33, 180, 38),
+                                      ),
+                                      Text(
+                                        "Nhân Viên",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, StatisticScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.analytics,
+                                        size: 60,
+                                        color:
+                                            Color.fromARGB(255, 210, 104, 139),
+                                      ),
+                                      Text(
+                                        "Thống Kê",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, myInventoryScreen.routeName);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        const Color.fromRGBO(237, 235, 235, 1),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.inventory,
+                                        size: 60,
+                                        color: Color(0xFF045EA9),
+                                      ),
+                                      Text(
+                                        "Kiểm kê",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Thiết Bị",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, ErrorScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.notification_important,
-                            size: 60,
-                            color: Colors.orange,
-                          ),
-                          Text(
-                            "Báo Hỏng",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, DepartmentScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.business,
-                            size: 60,
-                            color: Color.fromRGBO(110, 139, 61, 1),
-                          ),
-                          Text(
-                            "Khoa Phòng",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, EmployeeScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Color.fromARGB(255, 33, 180, 38),
-                          ),
-                          Text(
-                            "Nhân Viên",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, StatisticScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.analytics,
-                            size: 60,
-                            color: Color.fromARGB(255, 210, 104, 139),
-                          ),
-                          Text(
-                            "Thống Kê",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, myInventoryScreen.routeName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(237, 235, 235, 1),
-                      ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.inventory,
-                            size: 60,
-                            color: Color(0xFF045EA9),
-                          ),
-                          Text(
-                            "Kiểm kê",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-        // Positioned(
-        //   bottom: 0,
-        //   left: 0,
-        //   right: 0,
-        //   child: Container(
-        //       decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.only(
-        //               topLeft: Radius.circular(30),
-        //               topRight: Radius.circular(20))),
-        //       child: BottomNavigationBar(
-        //           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        //           currentIndex: _currentIndex,
-        //           onTap: (index) {
-        //             setState(() {
-        //               _currentIndex = index;
-        //             });
-        //           },
-        //           iconSize: 30,
-        //           items: [
-        //             BottomNavigationBarItem(
-        //               icon: Icon(Icons.home),
-        //               label: 'Trang chủ',
-        //             ),
-        //             BottomNavigationBarItem(
-        //               icon: Icon(Icons.crop_free),
-        //               label: 'Scan',
-        //             ),
-        //             BottomNavigationBarItem(
-        //               icon: Icon(Icons.person_2),
-        //               label: 'Cá nhân',
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        // ),
-      ]),
-    ));
+                        )),
+                  ]),
+                );
+              } else {
+                return const Center(child:CircularProgressIndicator());
+              }
+            })
+        );
   }
 }
