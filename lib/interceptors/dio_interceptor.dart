@@ -1,5 +1,5 @@
+import 'package:appdemo/service/store.dart';
 import 'package:dio/dio.dart';
-import "package:appdemo/services/store.dart";
 
 class DioInterceptor extends Interceptor {
   @override
