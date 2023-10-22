@@ -7,6 +7,7 @@ import 'package:appdemo/modules/inventory/bloc/create_inventory_state.dart';
 import 'package:appdemo/service/connectivity.dart';
 import 'package:appdemo/themes/app_color.dart';
 import 'package:appdemo/utils/show_dialog_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/quickalert.dart';
@@ -56,9 +57,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   }
                   return const SizedBox();
                 }, listener: (context, state) {
-                  if (state is CreateInventoryLoaded) {
-                    quickAlert(
-                        context, state.data.message!, QuickAlertType.success);
+                  if (state is CreateInventoryLoaded) {          
+                    quickAlert(context, state.data.message!.tr(),
+                        QuickAlertType.success);
                   } else if (state is CreateInventoryErrorApi) {
                     quickAlert(context, state.error, QuickAlertType.error);
                   }

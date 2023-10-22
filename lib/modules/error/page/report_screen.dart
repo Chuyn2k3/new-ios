@@ -7,6 +7,7 @@ import 'package:appdemo/modules/error/bloc/report_error_bloc_state.dart';
 import 'package:appdemo/service/connectivity.dart';
 import 'package:appdemo/themes/app_color.dart';
 import 'package:appdemo/utils/show_dialog_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/quickalert.dart';
@@ -58,7 +59,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 }, listener: (context, state) {
                   if (state is ReportErrorLoaded) {
                     quickAlert(
-                        context, state.data.message!, QuickAlertType.success);
+                        context, state.data.message!.tr(), QuickAlertType.success);
                   } else if (state is ReportErrorErrorApi) {
                     quickAlert(context, state.error, QuickAlertType.error);
                   }

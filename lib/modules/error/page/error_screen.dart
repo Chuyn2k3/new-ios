@@ -19,16 +19,18 @@ class ErrorScreen extends StatefulWidget {
 
 class _ErrorScreenState extends State<ErrorScreen> {
   final TextEditingController _textEditingController = TextEditingController();
-
-  void searchErrorDevice(String query) async {
+  bool look = false;
+  void searchErrorDevice(String query,bool look) {
     final suggestions = filteredDataList.where((element) {
       final deviceTitle = element.title.toLowerCase();
+      final deviceModel = element.model!.toLowerCase();
+      final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input);
+      return deviceTitle.contains(input) ||
+          deviceModel.contains(input) ||
+          deviceSerial.contains(input);
     }).toList();
-    setState(() {
-      _errorDevice = suggestions;
-    });
+    _errorDevice = suggestions;
   }
 
   void filterDataListByCondition(List<DeviceData> listDevice) {
@@ -36,6 +38,12 @@ class _ErrorScreenState extends State<ErrorScreen> {
     filteredDataList = listDevice.where((data) {
       return data.status == 'active'; // Điều kiện ở đây
     }).toList();
+  }
+
+  void research(String query) {
+    setState(() {
+      look = true;
+    });
   }
 
   List<DeviceData> _errorDevice = [];
@@ -76,7 +84,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       child: TextFormField(
-                        onChanged: searchErrorDevice,
+                        onChanged: research,
                         maxLength: 500,
                         controller: _textEditingController,
                         decoration: const InputDecoration(
@@ -130,8 +138,9 @@ class _ErrorScreenState extends State<ErrorScreen> {
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
                           onPressed: () {
-                            searchErrorDevice(
-                                _textEditingController.text.toString());
+                            setState(() {
+      look = true;
+    });
                           },
                         )),
                   ),
@@ -195,7 +204,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                       return const CircularProgressIndicator();
                     } else if (state is DeviceLoaded) {
                       filterDataListByCondition(state.data.data!);
-                      searchErrorDevice(_textEditingController.text);
+                      searchErrorDevice(_textEditingController.text,look);
                       return DisplayDevice(_errorDevice);
                     } else {
                       return Column(

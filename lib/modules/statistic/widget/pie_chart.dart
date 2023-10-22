@@ -47,7 +47,8 @@ Widget customizePieChart(BuildContext context, List<StatisticModel> dataState,
     }
     return data;
   }
-
+  
+   
   Map<String, double> dataMap = {};
   for (var statistic in searchOnDepartmentDevice(dataState)) {
     dataMap[statistic.departmentTitle!] =

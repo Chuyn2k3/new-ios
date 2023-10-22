@@ -18,7 +18,6 @@ class DeviceScreen extends StatefulWidget {
 
 class _DeviceScreenState extends State<DeviceScreen> {
   final TextEditingController _textEditingController = TextEditingController();
-  bool isLoading = false;
   String selectedStatus = statusDeviceObject['all']!;
   String selectedDepartment = statusDeviceObject['all']!;
   bool look = false;
@@ -35,8 +34,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
     listDepartment = _department.map((e) => e.title).toList();
     listDepartment.insert(0, statusDeviceObject['all']!);
   }
-
-  List<String> listDepartment = [];
+   List<String> listDepartment = [];
   @override
   void initState() {
     super.initState();
@@ -194,22 +192,19 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 ],
               ),
               Flexible(
-                  child: RefreshIndicator(
-                onRefresh: () async {
-                  await Future.delayed(const Duration(seconds: 1));
-                  setState(() {
-                    look = true;
-                  });
-                },
-                child: FilterDevice(
+                  child: RefreshIndicator(onRefresh: () async {
+                await Future.delayed(const Duration(seconds: 1));
+                setState(() {
+                  look = true;
+                });
+              }, child:FilterDevice(
                   loadData: fetchDevice,
                   statusDevice: selectedStatus,
                   department: selectedDepartment,
                   listDepartment: _department,
                   nameDevice: _textEditingController.text.toString(),
                   look: look,
-                ),
-              ))
+                ), ))
             ])));
   }
 
@@ -221,7 +216,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
   }
 
   void search(String query) {
-    setState(() {
+   setState(() {
       look = true;
     });
   }

@@ -3,7 +3,7 @@ class AppFunctionTerm {
   static const reportError = "Báo Hỏng";
   static const department = "Khoa Phòng";
   static const employee = "Nhân Viên";
-  static const statistic = "Thống kê";
+  static const statistic = "Thống Kê";
   static const inventory = "Kiểm Kê";
 }
 
@@ -58,7 +58,7 @@ class AppDepartmentTerm {
 }
 
 class AppDeviceTerm {
-  static const hintTextLookForm = 'Tên khoa phòng';
+  static const hintTextLookForm = 'Tên thiết bị,mã thiết bị,..';
   static const clickToShow = 'Ấn vào để xem chi tiết';
   static List listStatus = statusDeviceObject.values.toList();
   static const emptyDevice = "Không có thiết bị nào";
@@ -95,7 +95,7 @@ class AppEmployeeTerm {
 class AppReportErrorTerm {
   static const errorFailed = 'Báo hỏng thất bại';
   static const reasonError = 'Nhập lí do báo hỏng tại đây';
-  static const hintTextLookForm = 'Tên/mã thiết bị còn hoạt động';
+  static const hintTextLookForm = 'Tên/mã thiết bị còn hoạt động...';
 }
 
 class AppCreateInventoryTerm {

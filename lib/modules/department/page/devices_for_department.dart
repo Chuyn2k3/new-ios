@@ -138,8 +138,10 @@ class _DeviceScreenState extends State<DeviceInDepartmentScreen> {
   void searchDevice(String query) {
     final suggestions = devices.where((element) {
       final deviceTitle = element.title.toLowerCase();
+      final deviceModel = element.model!.toLowerCase();
+      final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input);
+      return deviceTitle.contains(input)||deviceModel.contains(input)||deviceSerial.contains(input);
     }).toList();
     setState(() {
       _devices = suggestions;

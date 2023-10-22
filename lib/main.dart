@@ -18,9 +18,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   //await dotenv.load();
   runApp(MultiBlocProvider(providers: [
@@ -57,7 +59,12 @@ void main() async {
     BlocProvider<NotificationBloc>(
       create: (BuildContext context) => NotificationBloc(),
     ),
-  ], child: const MyApp()));
+  ], child:EasyLocalization(
+      supportedLocales: const [Locale('en', 'US'), Locale('vi', 'VN')],
+      path: 'assets/translations', // <-- change the path of the translation files 
+      fallbackLocale: const Locale('en', 'US'),
+      child: const MyApp()
+    ),));
 }
 
 class MyApp extends StatelessWidget {
@@ -65,6 +72,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.white,

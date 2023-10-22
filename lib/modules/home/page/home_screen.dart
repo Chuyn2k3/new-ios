@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return BlocBuilder<UserDataCubit, UserModel>(builder: (context, user) {
       return WillPopScope(
           onWillPop: () async {
@@ -106,10 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.pushNamed(
                                   context, NotificationScreen.routeName);
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.notifications,
                               color: Colors.yellow,
-                              size: 45,
+                              size: screenSize.width * 0.14,
+                              //45,
                             ))
                       ],
                     ),
@@ -147,20 +149,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(20),
                               color: AppColors.white1,
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.medical_services,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: AppColors.redAccent,
                                 ),
                                 Text(
                                   AppFunctionTerm.device,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],
@@ -176,20 +178,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(20),
                               color: AppColors.white1,
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.notification_important,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: Colors.orange,
                                 ),
                                 Text(
                                   AppFunctionTerm.reportError,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],
@@ -205,20 +207,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: AppColors.white1),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.business,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: AppColors.greenAccent,
                                 ),
                                 Text(
                                   AppFunctionTerm.department,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],
@@ -235,20 +237,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(20),
                               color: AppColors.white1,
                             ),
-                            child: const Column(
+                            child:Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.person,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: AppColors.green1,
                                 ),
                                 Text(
                                   AppFunctionTerm.employee,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],
@@ -264,20 +266,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: AppColors.white1),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.analytics,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: AppColors.pink1,
                                 ),
                                 Text(
                                   AppFunctionTerm.statistic,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],
@@ -294,20 +296,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(20),
                               color: AppColors.white1,
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.inventory,
-                                  size: 60,
+                                  size: screenSize.width * 0.16,
                                   color: AppColors.blue1,
                                 ),
                                 Text(
                                   AppFunctionTerm.inventory,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 )
                               ],

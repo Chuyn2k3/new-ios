@@ -17,7 +17,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   bool look = false;
 
-  void searchEmployee(String query) async {
+  void searchEmployee(String query) {
     setState(() {
       look = true;
     });

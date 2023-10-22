@@ -26,15 +26,15 @@ class ShowEmployee extends StatefulWidget {
 class _ShowEmployeeState extends State<ShowEmployee> {
   List<EmployeeData> listEmployee = [];
 
-  void searchEmployee(List<EmployeeData> employee, String query) async {
+  void searchEmployee(List<EmployeeData> employee, String query) {
     final suggestions = employee.where((element) {
       final employeeTitle = element.displayname.toLowerCase();
+      final employeeEmail = element.email.toLowerCase();
+      final employeePhone = element.phone.toLowerCase();
       final input = query.toLowerCase();
-      return employeeTitle.contains(input);
-    }).toList();
-    setState(() {
-      listEmployee = suggestions;
-    });
+      return employeeTitle.contains(input)||employeeEmail.contains(input)||employeePhone.contains(input);
+    }).toList(); 
+      listEmployee = suggestions;  
   }
 
   @override
@@ -44,8 +44,11 @@ class _ShowEmployeeState extends State<ShowEmployee> {
       if (state is EmployeeLoading) {
         return const CircularProgressIndicator();
       } else if (state is EmployeeLoaded) {
-        searchEmployee(state.employee.data!, widget.nameEmployee);
-        return DisplayEmployee(employees: listEmployee);
+        final data = state.employee.data;
+        searchEmployee(data!, widget.nameEmployee);
+        return DisplayEmployee(
+            employees:
+                listEmployee);
       } else {
         return Column(
           children: [

@@ -36,7 +36,7 @@ class _FilterDeviceState extends State<FilterDevice> {
       List<DeviceData> defaultDevices,
       List<DepartmentData> listDepartment,
       String selectedStatus,
-      String selectedDepartment) async {
+      String selectedDepartment) {
     final suggestions = defaultDevices.where((element) {
       final deviceStatus = element.status.toLowerCase();
       final input = selectedStatus.toLowerCase();
@@ -47,47 +47,41 @@ class _FilterDeviceState extends State<FilterDevice> {
             ((department.id == data.departmentId) &&
                 (selectedDepartment == department.title))))
         .toList();
-    setState(() {
       devices = secondSuggestions;
-    });
   }
 
   void searchDevice(
     List<DeviceData> defaultDevices,
     String query,
-  ) async {
+  ) {
     final suggestions = defaultDevices.where((element) {
       final deviceTitle = element.title.toLowerCase();
+      final deviceModel = element.model!.toLowerCase();
+      final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input);
+      return deviceTitle.contains(input)||deviceModel.contains(input)||deviceSerial.contains(input);
     }).toList();
-    setState(() {
       devices = suggestions;
-    });
   }
 
   void searchOnStatusDevice(
-      List<DeviceData> defaultDevices, String selectedStatus) async {
+      List<DeviceData> defaultDevices, String selectedStatus) {
     final suggestions = defaultDevices.where((element) {
       final deviceStatus = element.status.toLowerCase();
       final input = selectedStatus.toLowerCase();
       return deviceStatus.contains(input);
     }).toList();
-    setState(() {
       devices = suggestions;
-    });
   }
 
   void searchOnDepartmentDevice(List<DeviceData> defaultDevices,
-      List<DepartmentData> listDepartment, String selectedDepartment) async {
+      List<DepartmentData> listDepartment, String selectedDepartment) {
     final List<DeviceData> suggestions = defaultDevices
         .where((data) => listDepartment.any((department) =>
             ((department.id == data.departmentId) &&
                 (selectedDepartment == department.title))))
         .toList();
-    setState(() {
       devices = suggestions;
-    });
   }
 
   String selectDefaultStatus = '';
@@ -144,19 +138,20 @@ class _FilterDeviceState extends State<FilterDevice> {
   }
 }
 
+
 class DisplayDevice extends StatelessWidget {
-  final List<DeviceData>? devices;
+  final List<DeviceData> devices;
 
   const DisplayDevice(this.devices, {super.key});
   @override
   Widget build(BuildContext context) {
-    return devices!.isEmpty
+    return devices.isEmpty
         ? Container(
             margin: const EdgeInsets.only(top: 40),
             child: const Text(AppDeviceTerm.emptyDevice))
         : ListView.builder(
             scrollDirection: Axis.vertical,
-            itemCount: devices!.length,
+            itemCount: devices.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                   onTap: () {
@@ -164,7 +159,7 @@ class DisplayDevice extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                DetailsScreen(devices![index])));
+                                DetailsScreen(devices[index])));
                   },
                   child: Container(
                     margin: const EdgeInsets.all(20),
@@ -189,7 +184,7 @@ class DisplayDevice extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                devices![index].title,
+                                devices[index].title,
                                 style: const TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,
@@ -197,18 +192,18 @@ class DisplayDevice extends StatelessWidget {
                               ),
                               Text(
                                 AppDetailDeviceTerm.model +
-                                    devices![index].model!,
+                                    devices[index].model!,
                                 style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 AppDetailDeviceTerm.serial +
-                                    devices![index].serial!,
+                                    devices[index].serial!,
                                 style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w400),
                               ),
                               Text(
-                                  'Trạng thái: ${statusDeviceObject[devices![index].status]}',
+                                  'Trạng thái: ${statusDeviceObject[devices[index].status]}',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400)),

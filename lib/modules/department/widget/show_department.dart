@@ -31,12 +31,12 @@ class _FilterDepartmentState extends State<FilterDepartment> {
   void searchDepartment(List<DepartmentData> data, String query) async {
     final suggestions = data.where((element) {
       final departmentTitle = element.title.toLowerCase();
+      final departmentEmail = element.email.toLowerCase();
+      final departmentPhone = element.phone.toLowerCase();
       final input = query.toLowerCase();
-      return departmentTitle.contains(input);
+      return departmentTitle.contains(input)||departmentEmail.contains(input)||departmentPhone.contains(input);
     }).toList();
-    setState(() {
       departments = suggestions;
-    });
   }
 
   @override

@@ -199,15 +199,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
   }
 
   void searchDevice(
-      List<DeviceData>? listDevice, String query, bool look) async {
+      List<DeviceData>? listDevice, String query, bool look) {
     final suggestions = listDevice!.where((element) {
       final deviceTitle = element.title.toLowerCase();
+      final deviceModel = element.model!.toLowerCase();
+      final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input);
+      return deviceTitle.contains(input)||deviceModel.contains(input)||deviceSerial.contains(input);
     }).toList();
-    setState(() {
       devices = suggestions;
-    });
   }
 
   void research(String query) {
