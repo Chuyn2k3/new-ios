@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class InforDevice extends StatelessWidget {
   final DeviceData device;
-  const InforDevice(this.device, {super.key});
 
+  const InforDevice(this.device, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,10 +82,7 @@ class InforDevice extends StatelessWidget {
                               fontSize: 14, fontWeight: FontWeight.w500))
                     ]),
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  Text(
-                      (device.model != null)
-                          ? device.model!
-                          : AppDetailDeviceTerm.none,
+                  Text((device.model != null) ? device.model! : AppDetailDeviceTerm.none,
                       style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,

@@ -128,7 +128,15 @@ class _PieChartScreenState extends State<PieChartScreen> {
                                   Icon(Icons.keyboard_arrow_down)
                                 ],
                               ),
-                            ))
+                            )),
+                        const Text(
+                          'Biểu đồ thống kê số lượng thiết bị hỏng',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height:5)
                       ],
                     ),
                   )),

@@ -1,8 +1,12 @@
+import 'package:appdemo/data/term/app_term.dart';
+import 'package:appdemo/modules/department/get_department_list.dart';
+import 'package:appdemo/modules/department/model/department_model.dart';
+import 'package:appdemo/modules/device/get_device_list.dart';
+import 'package:appdemo/modules/device/model/device_model.dart';
+import 'package:appdemo/modules/device/page/devices/detail_screen.dart';
 import 'package:appdemo/service/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class QRScreen extends StatefulWidget {
   const QRScreen({super.key});
@@ -14,26 +18,57 @@ class QRScreen extends StatefulWidget {
 class _QRScreenState extends State<QRScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
-  String result = " ";
+  String result = '';
   @override
   void dispose() {
     controller?.dispose();
     super.dispose();
   }
 
+  List<DeviceData> listDevice = [];
+  Future<void> dataListDevice() async {
+    listDevice = (await getDataFromApi())!;
+  }
+
+  List<DepartmentData> listDepartment = [];
+  Future<void> dataListDepartment() async {
+    listDepartment = (await getDataDepartmentFromApi())!;
+  }
+
+  String department = '';
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
-        result = scanData.code!;
+        result = scanData.code!.toString();
+      });
+      goToDetail(result);
+      List<DepartmentData> departments = listDepartment.where((element) {
+        return (element.id == device[0].departmentId);
+      }).toList();
+      setState(() {
+        department = departments[0].title;
       });
     });
   }
 
+  void goToDetail(String id) {
+    final devices = listDevice.where((element) {
+      return (element.id.toString() == id);
+    }).toList();
+
+    setState(() {
+      device = devices;
+    });
+  }
+
+  List<DeviceData> device = [];
   @override
   void initState() {
     super.initState();
     connect();
+    dataListDevice();
+    dataListDepartment();
   }
 
   @override
@@ -47,48 +82,78 @@ class _QRScreenState extends State<QRScreen> {
       body: Column(
         children: [
           Expanded(
-              flex: 5,
+              flex: 4,
               child: QRView(
                 key: qrKey,
                 onQRViewCreated: _onQRViewCreated,
               )),
-          Expanded(
-              flex: 2,
-              child: Center(
+          const Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.only(top: 35),
                 child: Text(
-                  'Scan Result:$result',
-                  style: const TextStyle(fontSize: 18),
+                  'Thông tin thiết bị:',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               )),
-          Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (result.isNotEmpty) {
-                      Clipboard.setData(ClipboardData(text: result));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to Clipboard')));
-                    }
-                  },
-                  child: const Text('Copy'),
+          device.isNotEmpty
+              ? Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${AppDetailDeviceTerm.nameDevice} ${device[0].title}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              '${AppDetailDeviceTerm.model} ${device[0].model}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              '${AppDetailDeviceTerm.serial} ${device[0].serial}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              '${AppDetailDeviceTerm.status} ${statusDeviceObject[device[0].status]}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              '${AppDetailDeviceTerm.nameDepartment} $department',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox(
+                  height: 0,
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (result.isNotEmpty) {
-                      final Uri url = Uri.parse(result);
-                      await launchUrl(url);
-                    }
-                  },
-                  child: const Text('Open'),
-                ),
-              ],
-            ),
+          ElevatedButton(
+            onPressed: () {
+              if (result.isNotEmpty) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsScreen(device[0])));
+              }
+            },
+            child: const Text('Xem chi tiết'),
+          ),
+          const SizedBox(
+            height: 20,
           )
         ],
       ),

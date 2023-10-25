@@ -31,6 +31,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _employee = (await dataList())!;
   }
 
+
   String getUserInventory(int userId) {
     String name = '';
     for (EmployeeData employee in _employee) {
@@ -46,6 +47,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void initState() {
     super.initState();
     fetchEmployeeData();
+
   }
 
   @override

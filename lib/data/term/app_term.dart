@@ -84,6 +84,9 @@ class AppDetailDeviceTerm {
   static const origin = "Xuất xứ:";
   static const model = "Model:";
   static const serial = "Serial:";
+  static const nameDevice = "Tên thiết bị:";
+  static const nameDepartment = "Khoa phòng:";
+  static const status = "Trạng thái:";
 }
 
 class AppEmployeeTerm {
