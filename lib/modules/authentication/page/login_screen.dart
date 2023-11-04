@@ -10,11 +10,11 @@ import 'package:appdemo/modules/home/cubit/cubit.dart';
 import 'package:appdemo/modules/screens/myhome_screen.dart';
 import 'package:appdemo/utils/show_dialog_widget.dart';
 import 'package:appdemo/service/store.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       } else {
         if (!context.mounted) return;
-        showDialogCustomize(context, DialogType.error, DialogTitle.error,
+        showDialogCustomize(context, AlertType.error, DialogTitle.error,
             availableBiometrics.toString());
       }
     }
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } catch (e) {
       if (!context.mounted) return;
-      showDialogCustomize(context, DialogType.error, DialogTitle.error,
+      showDialogCustomize(context, AlertType.error, DialogTitle.error,
           AppLoginTerm.emptyFingerPrint);
     }
     if (authenticated) {
@@ -208,14 +208,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                           if (!mounted) return;
                                           showDialogCustomize(
                                               context,
-                                              DialogType.error,
-                                              DialogTitle.warning,
+                                              AlertType.error,
+                                              DialogTitle.error,
                                               AppLoginTerm.apiError);
                                         }
                                       } else {
                                         showDialogCustomize(
                                             context,
-                                            DialogType.warning,
+                                            AlertType.warning,
                                             DialogTitle.warning,
                                             AppLoginTerm.unavailableBiometrics);
                                       }
@@ -307,17 +307,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (!context.mounted) return;
                   Navigator.pushNamed(context, MyhomeScreen.routeName);
                 } catch (e) {
-                  showDialogCustomize(context, DialogType.warning,
-                      DialogTitle.warning, AppLoginTerm.apiError);
+                  showDialogCustomize(context, AlertType.error,
+                      DialogTitle.error, AppLoginTerm.apiError);
                 }
               } else if (state is BiometricErrorApi) {
-                showDialogCustomize(context, DialogType.warning,
-                    DialogTitle.warning, AppLoginTerm.apiError);
+                showDialogCustomize(context, AlertType.error,
+                    DialogTitle.error, AppLoginTerm.apiError);
               } else if (state is BiometricErrorConnectivity) {
                 showDialogCustomize(
-                    context, DialogType.error, DialogTitle.error, state.error);
+                    context, AlertType.error, DialogTitle.error, state.error);
               } else if (state is BiometricErrorLoginFirst) {
-                showDialogCustomize(context, DialogType.warning,
+                showDialogCustomize(context, AlertType.warning,
                     DialogTitle.warning, state.error);
               }
             }),
@@ -364,18 +364,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       context, MyhomeScreen.routeName, (route) => false);
                 }
               } catch (e) {
-                showDialogCustomize(context, DialogType.error,
+                showDialogCustomize(context, AlertType.error,
                     DialogTitle.error, AppLoginTerm.apiError);
               }
             } else if (state is AuthenticationError) {
-              showDialogCustomize(context, DialogType.error, DialogTitle.error,
+              showDialogCustomize(context, AlertType.error, DialogTitle.error,
                   AppLoginTerm.incorrectEmailAndPassword);
             } else if (state is AuthenticationErrorApi) {
-              showDialogCustomize(context, DialogType.error, DialogTitle.error,
+              showDialogCustomize(context, AlertType.error, DialogTitle.error,
                   AppLoginTerm.apiError);
             } else if (state is AuthenticationErrorConnectivity) {
               showDialogCustomize(
-                  context, DialogType.error, DialogTitle.error, state.error);
+                  context, AlertType.error, DialogTitle.error, state.error);
             }
           },
         ),

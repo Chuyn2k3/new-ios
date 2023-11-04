@@ -130,7 +130,7 @@ class _PieChartScreenState extends State<PieChartScreen> {
                               ),
                             )),
                         const Text(
-                          'Biểu đồ thống kê số lượng thiết bị hỏng',
+                          AppStatisticTerm.nameChart,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,

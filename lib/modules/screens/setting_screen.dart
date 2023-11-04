@@ -5,10 +5,10 @@ import 'package:appdemo/service/connectivity.dart';
 import 'package:appdemo/themes/app_color.dart';
 import 'package:appdemo/utils/show_dialog_widget.dart';
 import 'package:appdemo/service/store.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appdemo/data/term/local_storage_pref_key.dart';
 
@@ -36,8 +36,11 @@ class _SettingScreenState extends State<SettingScreen> {
         });
       } else {
         if (!context.mounted) return;
-        showDialogCustomize(context, DialogType.error, DialogTitle.error,
-            availableBiometrics.toString());
+        showDialogCustomize(
+                                              context,
+                                              AlertType.error,
+                                              DialogTitle.error,
+                                              availableBiometrics.toString());
       }
     }
   }
@@ -50,8 +53,11 @@ class _SettingScreenState extends State<SettingScreen> {
       );
     } catch (e) {
       if (!context.mounted) return;
-      showDialogCustomize(context, DialogType.error, DialogTitle.error,
-          AppLoginTerm.emptyFingerPrint);
+      showDialogCustomize(
+                                              context,
+                                              AlertType.error,
+                                              DialogTitle.error,
+                                              AppLoginTerm.emptyFingerPrint);
     }
     if (authenticated) {
       setState(() {

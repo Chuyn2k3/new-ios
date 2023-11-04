@@ -10,7 +10,7 @@ import 'package:appdemo/utils/show_dialog_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quickalert/quickalert.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen(this.models, {super.key});
@@ -57,11 +57,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   }
                   return const SizedBox();
                 }, listener: (context, state) {
-                  if (state is CreateInventoryLoaded) {          
-                    quickAlert(context, state.data.message!.tr(),
-                        QuickAlertType.success);
+                  if (state is CreateInventoryLoaded) {                            
+                    showDialogCustomize(
+                                              context,
+                                              AlertType.success,
+                                              DialogTitle.success,
+                                              state.data.message!.tr());
                   } else if (state is CreateInventoryErrorApi) {
-                    quickAlert(context, state.error, QuickAlertType.error);
+                    showDialogCustomize(
+                                              context,
+                                              AlertType.error,
+                                              DialogTitle.error,
+                                              state.error);
                   }
                 }),
                 Container(

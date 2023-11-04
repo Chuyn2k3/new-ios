@@ -30,8 +30,9 @@ class AppLoadDataTerm {
 }
 
 class DialogTitle {
-  static const error = 'Error';
-  static const warning = 'Warning';
+  static const error = 'Đã xảy ra lỗi';
+  static const warning = 'Lưu ý';
+  static const success = 'Thành công';
 }
 
 class AppLogoutTerm {
@@ -111,7 +112,7 @@ class AppNotificationTerm {
 }
 
 class AppTitleTerm {
-  static const webLink = "https://bvsonla.qltbyt.com";
+  static const webLink = "https://bvdemo.qltbyt.com";
   static const appName = "Quản Lý Thiết Bị Y Tế";
 }
 
@@ -123,4 +124,8 @@ class AppSettingTerm {
   static const savePasswordSuccess = "Lưu mật khẩu thành công";
   static const savePasswordConfirm = "Bạn có xác nhận tắt lưu mật khẩu \n\n"
       "Sau khi tắt lưu mật khẩu và rời khỏi đây,bạn cần đăng nhập lại để lưu mật khẩu";
+}
+
+class AppStatisticTerm {
+  static const nameChart = 'Biểu đồ thống kê số lượng thiết bị hỏng';
 }

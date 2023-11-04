@@ -7,9 +7,9 @@ import 'package:appdemo/modules/personal/bloc/logout_bloc_state.dart';
 import 'package:appdemo/modules/personal/model/user_model.dart';
 import 'package:appdemo/themes/app_color.dart';
 import 'package:appdemo/utils/show_dialog_widget.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 Widget showUserInformation(UserModel user) {
@@ -236,6 +236,28 @@ Widget displaySetting(BuildContext context) {
           indent: 20,
           endIndent: 20,
         ),
+        // BlocConsumer<LogoutBloc, LogoutState>(
+        //     listener: (context, state) {
+        //       if (state is LogoutLoaded) {
+        //         if (state.data.statusCode == 200) {
+        //           Navigator.pushNamedAndRemoveUntil(
+        //               context, LoginScreen.routeName, (route) => false);
+        //         }
+        //       } else if (state is LogoutError) {
+        //         showDialogCustomize(
+        //                                       context,
+        //                                       AlertType.error,
+        //                                       DialogTitle.error,
+        //                                       state.error);
+        //       }
+        //     },
+        //     bloc: fetchLogout,
+        //     builder: (context, state) {
+        //       if (state is LogoutLoading) {
+        //         return const CircularProgressIndicator();
+        //       }
+        //       return const SizedBox();
+        //     }),
         GestureDetector(
             onTap: () {
               fetchLogout.add(FetchLogout());
@@ -248,6 +270,7 @@ Widget displaySetting(BuildContext context) {
                 alignment: Alignment.center,
                 child: const Stack(
                   children: [
+                    
                     Row(
                       children: [
                         SizedBox(
@@ -282,20 +305,18 @@ Widget displaySetting(BuildContext context) {
                 }
               } else if (state is LogoutError) {
                 showDialogCustomize(
-                    context, DialogType.error, DialogTitle.error, state.error);
+                                              context,
+                                              AlertType.error,
+                                              DialogTitle.error,
+                                              state.error);
               }
             },
             bloc: fetchLogout,
             builder: (context, state) {
               if (state is LogoutLoading) {
-                return const Positioned(
-                  top: 0,
-                  left: 170,
-                  child: Visibility(
-                      visible: true, child: CircularProgressIndicator()),
-                );
+                return const CircularProgressIndicator();
               }
-              return const SizedBox();
+              return const SizedBox(height: 0,);
             })
       ]));
 }

@@ -1,29 +1,30 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 Future showDialogCustomize(
-    BuildContext context, DialogType dialogType, String title, String desc) {
-  return AwesomeDialog(
-          context: context,
-          dialogType: dialogType,
-          animType: AnimType.topSlide,
-          showCloseIcon: true,
-          title: title,
-          desc: desc,
-          btnCancelOnPress: () {})
-      .show();
+    BuildContext context, AlertType alerType, String title, String desc) {
+  return Alert(
+    context: context,
+    type: alerType,
+    title: title,
+    desc: desc,
+    style: const AlertStyle(descStyle: TextStyle(fontSize: 15)),
+    buttons: [
+      DialogButton(
+        onPressed: () => Navigator.pop(context),
+        width: 120,
+        child: const Text(
+          "Xác nhận",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      )
+    ],
+  ).show();
 }
 
-Future quickAlert(BuildContext context, String infor, QuickAlertType type) {
-  return QuickAlert.show(
-    context: context,
-    type: type,
-    text: infor,
-  );
-}
 
 Future showToast(String infor) {
   return Fluttertoast.showToast(
