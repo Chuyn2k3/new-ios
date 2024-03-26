@@ -31,6 +31,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     EmployeeBloc fetchEmployee = BlocProvider.of<EmployeeBloc>(context);
     return Scaffold(
         backgroundColor: Colors.blue,
@@ -51,6 +52,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                   Expanded(
                     flex: 3,
                     child: Container(
+                      height: size.height * 0.1,
                       margin: const EdgeInsets.only(top: 20, left: 20),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -96,7 +98,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        height: 49,
+                        height: size.height*0.065,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
@@ -104,7 +106,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                           color: AppColors.white3,
                         ),
                         margin:
-                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                             EdgeInsets.only(top: 0, right: 20, bottom:size.height*0.01),
                         child: TextButton(
                           child: const Text(
                             'Tìm kiếm',

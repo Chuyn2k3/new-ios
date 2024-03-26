@@ -20,7 +20,7 @@ class ErrorScreen extends StatefulWidget {
 class _ErrorScreenState extends State<ErrorScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   bool look = false;
-  void searchErrorDevice(String query,bool look) {
+  void searchErrorDevice(String query, bool look) {
     final suggestions = filteredDataList.where((element) {
       final deviceTitle = element.title.toLowerCase();
       final deviceModel = element.model!.toLowerCase();
@@ -59,6 +59,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
   Widget build(BuildContext context) {
     DeviceBloc fetchData = BlocProvider.of<DeviceBloc>(context);
     fetchData.add(FetchDevice());
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
@@ -78,6 +79,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                   Expanded(
                     flex: 3,
                     child: Container(
+                      height: size.height * 0.1,
                       margin: const EdgeInsets.only(top: 20, left: 20),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -123,7 +125,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        height: 49.55,
+                        height: size.height*0.065,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
@@ -131,7 +133,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                           color: AppColors.white3,
                         ),
                         margin:
-                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                             EdgeInsets.only(top: 0, right: 20, bottom:size.height*0.01,),
                         child: TextButton(
                           child: const Text(
                             'Tìm kiếm',
@@ -139,8 +141,8 @@ class _ErrorScreenState extends State<ErrorScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-      look = true;
-    });
+                              look = true;
+                            });
                           },
                         )),
                   ),
@@ -204,7 +206,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
                       return const CircularProgressIndicator();
                     } else if (state is DeviceLoaded) {
                       filterDataListByCondition(state.data.data!);
-                      searchErrorDevice(_textEditingController.text,look);
+                      searchErrorDevice(_textEditingController.text, look);
                       return DisplayDevice(_errorDevice);
                     } else {
                       return Column(

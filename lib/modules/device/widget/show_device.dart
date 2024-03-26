@@ -47,7 +47,7 @@ class _FilterDeviceState extends State<FilterDevice> {
             ((department.id == data.departmentId) &&
                 (selectedDepartment == department.title))))
         .toList();
-      devices = secondSuggestions;
+    devices = secondSuggestions;
   }
 
   void searchDevice(
@@ -59,9 +59,11 @@ class _FilterDeviceState extends State<FilterDevice> {
       final deviceModel = element.model!.toLowerCase();
       final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input)||deviceModel.contains(input)||deviceSerial.contains(input);
+      return deviceTitle.contains(input) ||
+          deviceModel.contains(input) ||
+          deviceSerial.contains(input);
     }).toList();
-      devices = suggestions;
+    devices = suggestions;
   }
 
   void searchOnStatusDevice(
@@ -71,7 +73,7 @@ class _FilterDeviceState extends State<FilterDevice> {
       final input = selectedStatus.toLowerCase();
       return deviceStatus.contains(input);
     }).toList();
-      devices = suggestions;
+    devices = suggestions;
   }
 
   void searchOnDepartmentDevice(List<DeviceData> defaultDevices,
@@ -81,7 +83,7 @@ class _FilterDeviceState extends State<FilterDevice> {
             ((department.id == data.departmentId) &&
                 (selectedDepartment == department.title))))
         .toList();
-      devices = suggestions;
+    devices = suggestions;
   }
 
   String selectDefaultStatus = '';
@@ -138,13 +140,13 @@ class _FilterDeviceState extends State<FilterDevice> {
   }
 }
 
-
 class DisplayDevice extends StatelessWidget {
   final List<DeviceData> devices;
 
   const DisplayDevice(this.devices, {super.key});
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return devices.isEmpty
         ? Container(
             margin: const EdgeInsets.only(top: 40),
@@ -164,7 +166,7 @@ class DisplayDevice extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.all(20),
                     padding: const EdgeInsets.only(right: 30, left: 30),
-                    height: 100,
+                    height: size.height * 0.15,
                     decoration: BoxDecoration(
                         color: AppColors.white5,
                         borderRadius: BorderRadius.circular(20)),

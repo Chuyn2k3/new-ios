@@ -34,9 +34,11 @@ class _FilterDepartmentState extends State<FilterDepartment> {
       final departmentEmail = element.email.toLowerCase();
       final departmentPhone = element.phone.toLowerCase();
       final input = query.toLowerCase();
-      return departmentTitle.contains(input)||departmentEmail.contains(input)||departmentPhone.contains(input);
+      return departmentTitle.contains(input) ||
+          departmentEmail.contains(input) ||
+          departmentPhone.contains(input);
     }).toList();
-      departments = suggestions;
+    departments = suggestions;
   }
 
   @override
@@ -74,6 +76,7 @@ class DisplayDepartment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return departments.isEmpty
         ? Container(
             margin: const EdgeInsets.only(top: 40),
@@ -85,7 +88,7 @@ class DisplayDepartment extends StatelessWidget {
             itemBuilder: (context, index) {
               return Container(
                 margin: const EdgeInsets.all(20),
-                height: 235,
+                height:size.height*0.28,
                 decoration: BoxDecoration(
                     color: AppColors.white5,
                     borderRadius: BorderRadius.circular(20)),

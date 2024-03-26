@@ -51,6 +51,7 @@ dependencies:
   material_design_icons_flutter: ^7.0.7296
   easy_localization: ^3.0.3
   rflutter_alert: ^2.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

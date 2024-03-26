@@ -24,6 +24,7 @@ class ShowNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return (notification.isEmpty)
         ? Container(
             margin: const EdgeInsets.only(top: 40),
@@ -37,7 +38,7 @@ class ShowNotification extends StatelessWidget {
                   children: [
                     Container(
                         padding: const EdgeInsets.all(13),
-                        width: 300,
+                        width: size.width*0.8,
                         decoration: const BoxDecoration(
                             color: AppColors.white5,
                             borderRadius:

@@ -33,6 +33,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     DeviceBloc fetchData = BlocProvider.of<DeviceBloc>(context);
     fetchData.add(FetchDevice());
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
@@ -52,6 +53,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   Expanded(
                     flex: 3,
                     child: Container(
+                      height: size.height * 0.1,
                       margin: const EdgeInsets.only(top: 20, left: 20),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -97,7 +99,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        height: 49.55,
+                         height: size.height*0.065,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(30),
@@ -105,7 +107,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                           color: AppColors.white3,
                         ),
                         margin:
-                            const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+                             EdgeInsets.only(top: 0, right: 20, bottom:size.height*0.01,),
                         child: TextButton(
                           child: const Text(
                             'Tìm kiếm',
@@ -198,16 +200,17 @@ class _InventoryScreenState extends State<InventoryScreen> {
             ])));
   }
 
-  void searchDevice(
-      List<DeviceData>? listDevice, String query, bool look) {
+  void searchDevice(List<DeviceData>? listDevice, String query, bool look) {
     final suggestions = listDevice!.where((element) {
       final deviceTitle = element.title.toLowerCase();
       final deviceModel = element.model!.toLowerCase();
       final deviceSerial = element.serial!.toLowerCase();
       final input = query.toLowerCase();
-      return deviceTitle.contains(input)||deviceModel.contains(input)||deviceSerial.contains(input);
+      return deviceTitle.contains(input) ||
+          deviceModel.contains(input) ||
+          deviceSerial.contains(input);
     }).toList();
-      devices = suggestions;
+    devices = suggestions;
   }
 
   void research(String query) {

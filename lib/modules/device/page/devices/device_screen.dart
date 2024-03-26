@@ -34,7 +34,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
     listDepartment = _department.map((e) => e.title).toList();
     listDepartment.insert(0, statusDeviceObject['all']!);
   }
-   List<String> listDepartment = [];
+
+  List<String> listDepartment = [];
   @override
   void initState() {
     super.initState();
@@ -45,6 +46,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
   @override
   Widget build(BuildContext context) {
     final fetchDevice = BlocProvider.of<DeviceBloc>(context);
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
@@ -59,7 +61,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
             child: Column(children: [
-              textFormField(),
+              textFormField(size),
               Row(
                 children: [
                   Expanded(
@@ -192,19 +194,22 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 ],
               ),
               Flexible(
-                  child: RefreshIndicator(onRefresh: () async {
-                await Future.delayed(const Duration(seconds: 1));
-                setState(() {
-                  look = true;
-                });
-              }, child:FilterDevice(
+                  child: RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(seconds: 1));
+                  setState(() {
+                    look = true;
+                  });
+                },
+                child: FilterDevice(
                   loadData: fetchDevice,
                   statusDevice: selectedStatus,
                   department: selectedDepartment,
                   listDepartment: _department,
                   nameDevice: _textEditingController.text.toString(),
                   look: look,
-                ), ))
+                ),
+              ))
             ])));
   }
 
@@ -216,7 +221,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
   }
 
   void search(String query) {
-   setState(() {
+    setState(() {
       look = true;
     });
   }
@@ -335,12 +340,13 @@ class _DeviceScreenState extends State<DeviceScreen> {
     );
   }
 
-  Widget textFormField() {
+  Widget textFormField(Size size) {
     return Row(
       children: [
         Expanded(
           flex: 3,
           child: Container(
+            height: size.height*0.1,
             margin: const EdgeInsets.only(top: 20, left: 20),
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -386,14 +392,14 @@ class _DeviceScreenState extends State<DeviceScreen> {
         Expanded(
           flex: 1,
           child: Container(
-              height: 49.55,
+              height: size.height*0.065,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
                     bottomRight: Radius.circular(30)),
                 color: AppColors.white3,
               ),
-              margin: const EdgeInsets.only(top: 3, right: 20, bottom: 5),
+              margin: EdgeInsets.only(top: 0, right: 20, bottom: size.height*0.01),
               child: TextButton(
                 child: const Text(
                   'Tìm kiếm',

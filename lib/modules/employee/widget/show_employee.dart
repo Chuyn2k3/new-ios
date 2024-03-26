@@ -39,6 +39,7 @@ class _ShowEmployeeState extends State<ShowEmployee> {
 
   @override
   Widget build(BuildContext context) {
+    
     widget.fetchEmployee.add(FetchEmployee());
     return BlocBuilder<EmployeeBloc, EmployeeState>(builder: (context, state) {
       if (state is EmployeeLoading) {
@@ -71,6 +72,7 @@ class DisplayEmployee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return employees.isEmpty
         ? Container(
             margin: const EdgeInsets.only(top: 40),
@@ -85,7 +87,7 @@ class DisplayEmployee extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.all(20),
                     padding: const EdgeInsets.only(right: 30, left: 30),
-                    height: 100,
+                    height: size.height*0.15,
                     decoration: BoxDecoration(
                         color: AppColors.white5,
                         borderRadius: BorderRadius.circular(20)),
