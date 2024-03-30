@@ -9,10 +9,11 @@ class InforDevice extends StatelessWidget {
   const InforDevice(this.device, {super.key});
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.all(10),
       width: double.infinity,
-      height: 500,
+      height:size.height * 0.65,
       decoration: const BoxDecoration(
           color: AppColors.white5,
           borderRadius: BorderRadius.only(
@@ -82,7 +83,10 @@ class InforDevice extends StatelessWidget {
                               fontSize: 14, fontWeight: FontWeight.w500))
                     ]),
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  Text((device.model != null) ? device.model! : AppDetailDeviceTerm.none,
+                  Text(
+                      (device.model != null)
+                          ? device.model!
+                          : AppDetailDeviceTerm.none,
                       style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -150,22 +154,19 @@ class InforDevice extends StatelessWidget {
         ),
         Container(
             margin:
-                const EdgeInsets.only(top: 10, right: 30, left: 30, bottom: 10),
+                const EdgeInsets.only(top: 0, right: 30, left: 30, bottom: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppDetailDeviceTerm.manufacturer,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
-                      ),
-                      Text(AppDetailDeviceTerm.origin,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500))
-                    ]),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    AppDetailDeviceTerm.manufacturer,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  Text(AppDetailDeviceTerm.origin,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500))
+                ]),
                 Expanded(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,

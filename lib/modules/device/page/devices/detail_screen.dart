@@ -31,7 +31,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _employee = (await dataList())!;
   }
 
-
   String getUserInventory(int userId) {
     String name = '';
     for (EmployeeData employee in _employee) {
@@ -47,11 +46,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void initState() {
     super.initState();
     fetchEmployeeData();
-
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     HistoryInventoryBloc fetchHistoryInventory =
         BlocProvider.of<HistoryInventoryBloc>(context);
     return Scaffold(
@@ -85,7 +84,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     reportErrorBottomsheet(context, widget.models);
                   },
                   child: Container(
-                      height: 40,
+                      height: size.height * 0.05,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
@@ -132,7 +131,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       createInventoryBottomsheet(context, widget.models);
                     },
                     child: Container(
-                        height: 40,
+                        height: size.height * 0.05,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -182,7 +181,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           margin: const EdgeInsets.all(10),
                           alignment: Alignment.center,
                           width: double.infinity,
-                          height: 45,
+                          height: size.height * 0.055,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.blue),
