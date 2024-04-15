@@ -86,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
           .read(key: keyPref.keyPasswordRememberToggle);
     }
     setState(() {
-      emailController.text = email!;
-      passController.text = password!;
+      emailController.text = email ?? '';
+      passController.text = password ?? '';
       if (emailController.text.isNotEmpty) {
         setState(() {
           radioValue = true;
@@ -311,8 +311,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       DialogTitle.error, AppLoginTerm.apiError);
                 }
               } else if (state is BiometricErrorApi) {
-                showDialogCustomize(context, AlertType.error,
-                    DialogTitle.error, AppLoginTerm.apiError);
+                showDialogCustomize(context, AlertType.error, DialogTitle.error,
+                    AppLoginTerm.apiError);
               } else if (state is BiometricErrorConnectivity) {
                 showDialogCustomize(
                     context, AlertType.error, DialogTitle.error, state.error);
@@ -364,8 +364,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       context, MyhomeScreen.routeName, (route) => false);
                 }
               } catch (e) {
-                showDialogCustomize(context, AlertType.error,
-                    DialogTitle.error, AppLoginTerm.apiError);
+                showDialogCustomize(context, AlertType.error, DialogTitle.error,
+                    AppLoginTerm.apiError);
               }
             } else if (state is AuthenticationError) {
               showDialogCustomize(context, AlertType.error, DialogTitle.error,
